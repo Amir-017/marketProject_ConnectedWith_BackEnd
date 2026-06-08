@@ -80,7 +80,7 @@ const App = () => {
   // ==========================
   const getProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/products");
+      const res = await axios.get("https://e-commerce-nodejs-blush.vercel.app/products");
       setProducts(res.data.products);
     } catch (err) {
       console.log(err);
@@ -90,7 +90,7 @@ const App = () => {
   const getCategories = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:3000/products/allCategoriesName"
+        "https://e-commerce-nodejs-blush.vercel.app/products/allCategoriesName"
       );
       setCategoriesNameSideBar(res.data.categoriesName);
     } catch (err) {
