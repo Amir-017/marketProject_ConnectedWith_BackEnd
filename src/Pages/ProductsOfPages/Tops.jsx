@@ -18,7 +18,7 @@ const Tops = () => {
   const getFrag = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/tops",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/tops",
     }).then((data) => setTops(data.data.products));
   };
 

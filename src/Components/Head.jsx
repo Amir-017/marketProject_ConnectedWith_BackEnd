@@ -191,7 +191,7 @@ const Head = ({
                           onClick={() => {
                             localStorage.removeItem("accessToken");
                             localStorage.removeItem("userName");
-                            window.location.href = "/";
+                            window.location.href = "/login";
                           }}
                           className="block px-4 py-2 w-full text-left rounded-b-lg text-red-600 hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
                         >
@@ -288,7 +288,7 @@ const Head = ({
                         onClick={() => {
                           localStorage.removeItem("accessToken");
                           localStorage.removeItem("userName");
-                          window.location.href = "/";
+                          window.location.href = "/login";
                         }}
                         className="block px-4 py-2 w-full text-left rounded-b-lg text-red-600 hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
                       >

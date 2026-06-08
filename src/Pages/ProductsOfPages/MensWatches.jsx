@@ -18,7 +18,7 @@ const MensWatches = () => {
   const getWatches = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/mens-watches",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/mens-watches",
     }).then((data) => setWatches(data.data.products));
   };
 

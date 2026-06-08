@@ -93,6 +93,7 @@ const App = () => {
         "https://e-commerce-nodejs-blush.vercel.app/products/allCategoriesName"
       );
       setCategoriesNameSideBar(res.data.categoriesName);
+      console.log(res.data.categoriesName);
     } catch (err) {
       console.log(err);
     }
@@ -130,17 +131,17 @@ const App = () => {
       {/* ==========================
            Sidebar
       ========================== */}
-      <div className="removeShadowBlack">
-        <Drawer open={open} className="p-6 w-[75%] lg:w-[320px]">
+      <div className=" removeShadowBlack ">
+        <Drawer open={open} className="p-6 w-[75%] lg:w-[320px] bg-white dark:bg-blue-gray-900">
 
-          <div className="mb-6 flex justify-between border-b pb-4">
+          <div className="mb-6 flex justify-between border-b pb-4 ">
             <h2 className="text-xl font-bold text-green-600">Menu</h2>
             <IconButton onClick={closeDrawer}>✕</IconButton>
           </div>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2  dark:text-gray-300 h-screen overflow-y-auto">
             {categoriesNameSideBar.map((item, index) => (
-              <Link key={index} to={`/${item}`} className="px-4 py-3 hover:bg-gray-100 rounded">
+              <Link key={index} to={`/${item}`} className="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
                 {item}
               </Link>
             ))}

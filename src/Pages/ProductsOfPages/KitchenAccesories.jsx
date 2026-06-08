@@ -18,7 +18,7 @@ const KitchenAccesories = () => {
   const getKit = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/kitchen-accessories",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/kitchen-accessories",
     }).then((data) => setKit(data.data.products));
   };
 

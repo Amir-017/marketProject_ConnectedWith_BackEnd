@@ -40,7 +40,7 @@ export default function Register() {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:3000/users", {
+      const res = await axios.post("https://e-commerce-nodejs-blush.vercel.app/users", {
         name,
         email,
         password,

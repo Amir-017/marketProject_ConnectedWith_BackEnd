@@ -18,7 +18,7 @@ const SunGlasses = () => {
   const getFrag = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/sunglasses",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/sunglasses",
     }).then((data) => setglasses(data.data.products));
   };
 

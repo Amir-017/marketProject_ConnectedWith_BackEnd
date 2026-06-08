@@ -18,7 +18,7 @@ const WomensWatches = () => {
   const getFrag = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/womens-watches",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/womens-watches",
     }).then((data) => setWomWatches(data.data.products));
   };
 

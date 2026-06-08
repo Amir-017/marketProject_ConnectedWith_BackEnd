@@ -18,7 +18,7 @@ const HomeDecoration = () => {
   const getHome = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/home-decoration",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/home-decoration",
     }).then((data) => setHome(data.data.products));
   };
 

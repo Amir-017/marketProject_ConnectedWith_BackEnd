@@ -18,7 +18,7 @@ const MobileAccessories = () => {
   const getMob = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/mobile-accessories",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/mobile-accessories",
     }).then((data) => setMobile(data.data.products));
   };
 

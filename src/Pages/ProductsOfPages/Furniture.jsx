@@ -19,7 +19,7 @@ const Furniture = () => {
   const getFrun = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/furniture",
+       url: "https://e-commerce-nodejs-blush.vercel.app/products/category/furniture",
     }).then((data) => setFurniture(data.data.products));
   };
 

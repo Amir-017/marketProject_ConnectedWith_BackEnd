@@ -10,7 +10,7 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 const WomensDresses = () => {
-  const [dresses, setFdresses] = useState([]);
+  const [dresses, setDresses] = useState([]);
   const [Loading, setLoading] = useState(false);
   setTimeout(() => {
     setLoading(true);
@@ -18,8 +18,8 @@ const WomensDresses = () => {
   const getFrag = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/womens-dresses",
-    }).then((data) => setFdresses(data.data.products));
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/womens-dresses",
+    }).then((data) => setDresses(data.data.products));
   };
 
   useEffect(() => {

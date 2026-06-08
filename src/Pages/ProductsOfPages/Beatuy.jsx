@@ -19,7 +19,7 @@ const Beatuy = () => {
   const getBeatuy = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/beauty",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/beauty",
     }).then((data) => setBeatuy(data.data.products));
   };
 

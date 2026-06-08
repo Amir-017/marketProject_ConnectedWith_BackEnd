@@ -34,7 +34,7 @@ export default function Login() {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:3000/users/login", {
+      const res = await axios.post("https://e-commerce-nodejs-blush.vercel.app/users/login", {
         email,
         password,
       });

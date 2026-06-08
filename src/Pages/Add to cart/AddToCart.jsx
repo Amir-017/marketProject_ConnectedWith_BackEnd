@@ -12,12 +12,12 @@ const AddToCart = ({ }) => {
 
   const getCart = () => {
     axios
-      .get("http://localhost:3000/cart", {
+      .get("https://e-commerce-nodejs-blush.vercel.app/cart", {
         headers: {
           authorization: JSON.parse(localStorage.getItem("accessToken")),
         },
       })
-      .then((data) => setCart(data.data));
+      .then((data) => setCart(data?.data.data));
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const AddToCart = ({ }) => {
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
       const res = await axios.patch(
-        `http://localhost:3000/cart/${productId}`,
+        `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
         { quantity: product.quantity + 1 },
         {
           headers: {
@@ -54,8 +54,20 @@ const AddToCart = ({ }) => {
           },
         },
       );
-      getCart();
-      console.log("Cart updated:", res.data);
+      //////////////////
+      setCart(prev =>
+        prev?.map(item =>
+          item.product._id === productId
+            ? {
+              ...item,
+              quantity: item.quantity + 1
+            }
+            : item
+        )
+      );
+      // getCart();
+      // console.log("Cart updated:", res.data);
+      ///////////////////////////
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -77,7 +89,7 @@ const AddToCart = ({ }) => {
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
       const res = await axios.patch(
-        `http://localhost:3000/cart/${productId}`,
+        `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
         { quantity: product.quantity - 1 },
         {
           headers: {
@@ -86,7 +98,7 @@ const AddToCart = ({ }) => {
         },
       );
       getCart();
-      console.log("Cart updated:", res.data);
+      // console.log("Cart updated:", res.data);
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -104,7 +116,7 @@ const AddToCart = ({ }) => {
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
       const res = await axios.delete(
-        `http://localhost:3000/cart`,
+        `https://e-commerce-nodejs-blush.vercel.app/cart`,
 
         {
           headers: {
@@ -113,7 +125,7 @@ const AddToCart = ({ }) => {
         },
       );
       getCart();
-      console.log("Cart updated:", res.data);
+      // console.log("Cart updated:", res.data);
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -129,13 +141,13 @@ const AddToCart = ({ }) => {
     const newCount = counter - product.quantity;
     localStorage.setItem("counter", JSON.stringify(newCount));
 
-    console.log(product);
+    // console.log(product);
 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
       const res = await axios.delete(
-        `http://localhost:3000/cart/${productId}`,
+        `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
 
         {
           headers: {
@@ -144,7 +156,7 @@ const AddToCart = ({ }) => {
         },
       );
       getCart();
-      console.log("Cart updated:", res.data);
+      // console.log("Cart updated:", res.data);
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -161,7 +173,7 @@ const AddToCart = ({ }) => {
   }, []);
   return (
     <div className="w-full ">
-      {cart.data && cart.data.length == 0 ? (
+      {cart && cart.length == 0 ? (
         <div className="w-full dark:bg-blue-gray-900 bg-gray-300 min-h-screen flex justify-center items-center ">
           <div className="  flex flex-col justify-center items-center  gap-y-3">
             <img src={add} alt="" className=" w-[200px] h-[200px] " />
@@ -201,15 +213,14 @@ const AddToCart = ({ }) => {
 
                 {/* Table Body */}
                 <tbody>
-                  {cart.data?.map((item, index) => {
-                    const isLast = index === cart.data.length - 1;
+                  {cart?.map((item, index) => {
+                    const isLast = index === cart.length - 1;
                     return (
                       <tr
                         key={index}
-                        className={`text-center dark:bg-[#252B43] bg-white dark:text-white text-black ${
-                          !isLast &&
+                        className={`text-center dark:bg-[#252B43] bg-white dark:text-white text-black ${!isLast &&
                           "border-b border-gray-200 dark:border-gray-700"
-                        }`}
+                          }`}
                       >
                         {/* Product Title */}
                         <td className="p-3 text-sm">{item.product?.title}</td>
@@ -282,10 +293,10 @@ const AddToCart = ({ }) => {
               <h1 className="text-xl mt-3 md:mt-0 text-black dark:text-white text-center">
                 Total ({cart.totalItems || 0}) Items :{" "}
                 <span className="dark:text-blue-gray-400 text-green-900 font-bold underline">
-                  {cart.data && cart.data.length > 0
-                    ? cart?.data
-                        .reduce((x, y) => x + y.totalPrice, 0)
-                        .toFixed(2)
+                  {cart && cart.length > 0
+                    ? cart
+                      .reduce((x, y) => x + y.totalPrice, 0)
+                      .toFixed(2)
                     : "0.00"}{" "}
                   EGP
                 </span>

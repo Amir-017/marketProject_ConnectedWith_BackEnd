@@ -18,7 +18,7 @@ const Motorcycle = () => {
   const getMot = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/motorcycle",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/motorcycle",
       timeout: 10000,
     }).then((data) => setMotor(data.data.products));
   };

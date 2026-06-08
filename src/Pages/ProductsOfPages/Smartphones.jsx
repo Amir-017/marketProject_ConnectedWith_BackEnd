@@ -18,7 +18,7 @@ const Smartphones = () => {
   const getFrag = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/smartphones",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/smartphones",
       timeout: 10000,
     }).then((data) => setsmartPhone(data.data.products));
   };

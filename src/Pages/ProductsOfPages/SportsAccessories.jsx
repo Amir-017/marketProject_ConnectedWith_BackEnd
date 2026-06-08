@@ -18,7 +18,7 @@ const SportsAccessories = () => {
   const getFrag = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/sports-accessories",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/sports-accessories",
     }).then((data) => setsports(data.data.products));
   };
 

@@ -18,7 +18,7 @@ const WomensBags = () => {
   const getFrag = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/womens-bags",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/womens-bags",
     }).then((data) => setBags(data.data.products));
   };
 

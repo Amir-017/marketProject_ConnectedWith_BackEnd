@@ -11,7 +11,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
   const getDetails = () => {
     axios({
       method: "get",
-      url: `http://localhost:3000/products/${id}`,
+      url: `https://e-commerce-nodejs-blush.vercel.app/products/${id}`,
     }).then((data) => setDetailsProduct(data.data.data));
   };
 
@@ -45,10 +45,9 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
    }
    
    const res = await axios.post(
-     "http://localhost:3000/cart/addTocart",
+     "https://e-commerce-nodejs-blush.vercel.app/cart/addTocart",
      {
-       products: {product:[detailsProduct._id],quantity:1}
-      
+       products:[{product:detailsProduct._id,quantity:1}]
      },
      {
        headers: {

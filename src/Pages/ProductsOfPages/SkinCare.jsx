@@ -18,7 +18,7 @@ const SkinCare = () => {
   const getSkinCare = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/skin-care",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/skin-care",
     }).then((data) => setSkinCare(data.data.products));
   };
 

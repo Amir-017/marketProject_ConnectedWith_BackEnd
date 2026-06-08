@@ -18,7 +18,7 @@ const Laptops = () => {
   const getLap = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/laptops",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/laptops",
     }).then((data) => setLap(data.data.products));
   };
 

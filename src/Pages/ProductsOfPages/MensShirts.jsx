@@ -9,7 +9,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-const Fragrances = () => {
+const MensShirts = () => {
   const [shirt, setShirt] = useState([]);
   const [Loading, setLoading] = useState(false);
   setTimeout(() => {
@@ -18,7 +18,7 @@ const Fragrances = () => {
   const getShirt = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/mens-shirts",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/mens-shirts",
     }).then((data) => setShirt(data.data.products));
   };
 
@@ -119,4 +119,4 @@ const Fragrances = () => {
   );
 };
 
-export default Fragrances;
+export default MensShirts;

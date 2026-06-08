@@ -18,7 +18,7 @@ const Groceries = () => {
   const getGroc = () => {
     axios({
       method: "get",
-      url: "http://localhost:3000/products/category/groceries",
+      url: "https://e-commerce-nodejs-blush.vercel.app/products/category/groceries",
     }).then((data) => setGroc(data.data.products));
   };
 
