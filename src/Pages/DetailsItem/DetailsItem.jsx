@@ -57,6 +57,16 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
     const token = JSON.parse(localStorage.getItem("accessToken"));
     let counter = JSON.parse(localStorage.getItem("counter"));
 
+    if(!token){
+      await Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: 'Please login to add product to cart',
+        confirmButtonColor: "#dc2626"
+      });
+      navigate("/login");
+      return;
+    }
 
 
     const newCount = counter + 1;
