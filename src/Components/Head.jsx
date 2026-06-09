@@ -58,14 +58,16 @@ const Head = ({
   const token = JSON.parse(localStorage.getItem("accessToken"));
   const counterr = JSON.parse(localStorage.getItem("counter"));
   const decoded = token ? jwtDecode(token) : null;
-  
+
 
   return (
-    <Navbar
+  
+      <Navbar
       variant="gradient"
       color="blue-gray"
       className="sticky top-0 z-20 mx-auto max-w-screen-xl  from-green-900 to-green-800 dark:from-blue-gray-900 dark:to-blue-gray-800 px-4"
     >
+      
       <div className="flex h-full w-full items-center justify-between text-white">
         <div className="flex items-center gap-1">
           <Button
@@ -164,7 +166,7 @@ const Head = ({
                     />
                   </button>
 
-                  <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                  <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 overflow-y-auto">
                     <Link
                       to="/profile"
                       className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
@@ -172,7 +174,7 @@ const Head = ({
                       Profile
                     </Link>
 
-                    {decoded.role == "admin" && (
+                    {decoded?.role == "admin" ? (
                       <div className="">
                         <Link
                           to="/allUsers"
@@ -186,6 +188,12 @@ const Head = ({
                         >
                           Carts
                         </Link>
+                        <Link
+                          to="/adminDashboard"
+                          className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                        >
+                          admin Dashboard
+                        </Link>
 
                         <button
                           onClick={() => {
@@ -198,7 +206,7 @@ const Head = ({
                           Logout
                         </button>
                       </div>
-                    )}
+                    ):null}
                   </div>
                 </div>
               </div>
@@ -260,7 +268,7 @@ const Head = ({
                       />
                     </button>
 
-                    <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                    <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 overflow-y-auto h-auto max-h-48">
                       <Link
                         to="/profile"
                         className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
@@ -268,7 +276,7 @@ const Head = ({
                         Profile
                       </Link>
 
-                      {decoded.role == "admin" && (
+                      {decoded?.role == "admin" ? (
                         <div className="">
                           <Link
                             to="/allUsers"
@@ -282,15 +290,21 @@ const Head = ({
                           >
                             Carts
                           </Link>
+                          <Link
+                            to="/adminDashboard"
+                            className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                          >
+                            admin Dashboard
+                          </Link>
                         </div>
-                      )}
+                      ):null}
                       <button
                         onClick={() => {
                           localStorage.removeItem("accessToken");
                           localStorage.removeItem("userName");
                           window.location.href = "/login";
                         }}
-                        className="block px-4 py-2 w-full text-left rounded-b-lg text-red-600 hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                        className="block px-4 pb-6 py-2 w-full text-left rounded-b-lg text-red-600 hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
                       >
                         Logout
                       </button>
@@ -384,6 +398,8 @@ const Head = ({
         </div>
       </Collapse>
     </Navbar>
+ 
+ 
   );
 };
 

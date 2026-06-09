@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import api from "../../Api/api";
 
 function EditeProfile() {
   const [userDetail, setUserDetail] = useState({});
@@ -13,8 +14,8 @@ function EditeProfile() {
   const navigate = useNavigate();
 
   const getuserDetails = () => {
-    axios
-      .get("http://localhost:3000/users/profile", {
+    api
+      .get("https://e-commerce-nodejs-blush.vercel.app/users/profile", {
         headers: {
           authorization: JSON.parse(localStorage.getItem("accessToken")),
         },
@@ -51,8 +52,8 @@ function EditeProfile() {
     }
 
     try {
-      const res = await axios.patch(
-        "http://localhost:3000/users/editeProfile",
+      const res = await api.patch(
+        "https://e-commerce-nodejs-blush.vercel.app/users/editeProfile",
         {
           name,
           email,

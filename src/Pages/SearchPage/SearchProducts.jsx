@@ -9,32 +9,33 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../../Api/api";
 const SearchProducts = ({ checkSearch }) => {
   const [search, setSearch] = useState([]);
   const [Loading, setLoading] = useState(false);
   const searchItem = () => {
-    axios({
+    api({
       method: "get",
-      url: `http://localhost:3000/products/?search=${checkSearch}`,
+      url: `https://e-commerce-nodejs-blush.vercel.app/products/?search=${checkSearch}`,
     }).then((data) => setSearch(data.data));
   };
 
-  
-    let findforwardPage = (numofPage) => {
-      
-      axios({
-        method: "get",
-        url: `http://localhost:3000/products/?search=${checkSearch}&page=${+numofPage+1}`,
-      }).then((data) => setSearch(data.data));
-    };
-  
-    let findbackwardPage = (numofPage) => {
-      axios({
-        method: "get",
-        url: `http://localhost:3000/products/?search=${checkSearch}&page=${+numofPage-1}`,
-      }).then((data) => setSearch(data.data));
-    };
-  
+
+  let findforwardPage = (numofPage) => {
+
+    api({
+      method: "get",
+      url: `https://e-commerce-nodejs-blush.vercel.app/products/?search=${checkSearch}&page=${+numofPage + 1}`,
+    }).then((data) => setSearch(data.data));
+  };
+
+  let findbackwardPage = (numofPage) => {
+    api({
+      method: "get",
+      url: `https://e-commerce-nodejs-blush.vercel.app/products/?search=${checkSearch}&page=${+numofPage - 1}`,
+    }).then((data) => setSearch(data.data));
+  };
+
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
@@ -48,7 +49,7 @@ const SearchProducts = ({ checkSearch }) => {
     searchItem();
     // findforwardPage()
     // findbackwardPage()
-    
+
     if (!checkSearch) {
       navigate("/");
     }
@@ -63,9 +64,9 @@ const SearchProducts = ({ checkSearch }) => {
 
 
 
-//  useEffect(()=>{
-    
-//   },[])
+  //  useEffect(()=>{
+
+  //   },[])
   return (
     <div className="w-full  ">
       {Loading ? (
@@ -174,44 +175,53 @@ const SearchProducts = ({ checkSearch }) => {
                         </Link>
                       </CardFooter>
                     </Card>
-                 
-                   
+
+
                   </div>
 
                 ))
               ) : (
                 <div className="w-full h-[31vh]"></div>
               )}
-                 {/* /////////////////////////////////////// */}
 
-                    {/* Pagination Controls */}
-
-                    {/* /////////////////////////////////////// */}
-                    {search.totalPages >1 && <div className="flex items-center justify-center gap-4 mt-4 mb-2">
-                      <Button
-                        size="sm"
-                        variant="outlined"
-                        color="blue-gray"
-                        onClick={() => findbackwardPage(search.page)}
-                        disabled={search.page <= 1}
-                      >
-                       backward
-                      </Button>
-                      <span className="font-bold text-lg dark:text-white">
-                        {search.page} / {search.totalPages}
-                      </span>
-                      <Button
-                        size="sm"
-                        variant="outlined"
-                        color="blue-gray"
-                        onClick={() => findforwardPage(search.page)}
-                        disabled={search.page >= search.totalPages}
-                      >
-                        Forward
-                      </Button>
-                    </div>}
             </div>
-            
+            {/* /////////////////////////////////////// */}
+            {/* Pagination Controls */}
+            {/* /////////////////////////////////////// */}
+
+            {search.totalPages > 1 && (
+              <div className="w-full flex justify-center mt-10 mb-6">
+                <div className="flex items-center gap-6 px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-blue-gray-900 shadow-md backdrop-blur-sm">
+
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    color="blue-gray"
+                    onClick={() => findbackwardPage(search.page)}
+                    disabled={search.page <= 1}
+                    className="hover:scale-105 transition-transform duration-200"
+                  >
+                    Backward
+                  </Button>
+
+                  <div className="px-4 py-1 rounded-lg bg-gray-100 dark:bg-blue-gray-800 font-bold text-lg dark:text-white shadow-inner">
+                    {search.page} / {search.totalPages}
+                  </div>
+
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    color="blue-gray"
+                    onClick={() => findforwardPage(search.page)}
+                    disabled={search.page >= search.totalPages}
+                    className="hover:scale-105 transition-transform duration-200"
+                  >
+                    Forward
+                  </Button>
+
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ) : (

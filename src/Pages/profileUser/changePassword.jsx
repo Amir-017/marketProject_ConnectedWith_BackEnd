@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../Api/api";
 
 function ChangePassword() {
 
@@ -33,8 +34,8 @@ function ChangePassword() {
 
     try{
 
-      const res = await axios.patch(
-        "http://localhost:3000/users/changePasaword",
+      const res = await api.patch(
+        "https://e-commerce-nodejs-blush.vercel.app/users/changePassword",
         {
           currentPassword,
           newPassword

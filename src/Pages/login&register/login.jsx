@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../Api/api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,17 +28,17 @@ export default function Login() {
 
 
     if (password.length < 6) {
-      alert("Password must be at least 6 characters");
+      setError("Password must be at least 6 characters");
       return;
     }
 
     try {
       setLoading(true);
 
-      const res = await axios.post("https://e-commerce-nodejs-blush.vercel.app/users/login", {
+      const res = await api.post("https://e-commerce-nodejs-blush.vercel.app/users/login", {
         email,
         password,
-      });
+      }, { withCredentials: true });
 
       console.log("Login response:", res.data);
       
@@ -49,9 +50,9 @@ export default function Login() {
       console.error("Login error:", error);
 
       if (error.response) {
-       setError(error.response.data)
+        setError(error.response.data);
       } else {
-        alert(`Request error: ${error.message}`);
+        setError(`Request error: ${error.message}`);
       }
     } finally {
       setLoading(false);

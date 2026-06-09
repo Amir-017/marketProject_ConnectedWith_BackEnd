@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../Api/api";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -13,15 +14,13 @@ const AllUsers = () => {
 
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
-      const res = await axios.get("http://localhost:3000/users", {
+      const res = await api.get("https://e-commerce-nodejs-blush.vercel.app/users", {
         headers: {
           authorization: token,
         },
       });
 
-    //   console.log(res.data);
-
-      // لو الباك بيرجع users جوا object
+   
       setUsers(res.data.data || res.data);
     //   console.log(res.data);
       
@@ -39,16 +38,20 @@ const AllUsers = () => {
 
   const handleDelete = async (id) => {
     try {
+      
+      // نمسح اليوزر من الواجهة من غير ريفرش
+      setUsers((prev) => prev.filter((user) => user._id !== id));
+      
+      /////////////////////
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
-      await axios.delete(`http://localhost:3000/users/${id}`, {
+      await api.delete(`https://e-commerce-nodejs-blush.vercel.app/users/${id}`, {
         headers: {
           authorization: token,
         },
       });
 
-      // نمسح اليوزر من الواجهة من غير ريفرش
-      setUsers((prev) => prev.filter((user) => user._id !== id));
+     
     
     } catch (error) {
     //   console.log(error);
@@ -58,12 +61,19 @@ const AllUsers = () => {
 
   const handleChangeRole = async (id, currentRole) => {
     try {
+
+         setUsers((prev) =>
+        prev.map((user) =>
+          user._id === id ? { ...user, role: newRole } : user
+        )
+      );
+      ////////////////////////////
       const token = JSON.parse(localStorage.getItem("accessToken"));
     
       const newRole = currentRole === "admin" ? "member" : "admin";
     
-      const res = await axios.patch(
-        `http://localhost:3000/users/${id}/role`,
+      const res = await api.patch(
+        `https://e-commerce-nodejs-blush.vercel.app/users/${id}/role`,
         { role: newRole },
         {
           headers: {
@@ -75,11 +85,7 @@ const AllUsers = () => {
       console.log(res.data);
 
       
-      setUsers((prev) =>
-        prev.map((user) =>
-          user._id === id ? { ...user, role: newRole } : user
-        )
-      );
+   
     } catch (error) {
     //   console.log(error);
       alert(error.response?.data?.message || "Role update failed");
@@ -87,12 +93,12 @@ const AllUsers = () => {
   };
 
   if (loading) {
-    return <h2 className="text-center mt-5">Loading...</h2>;
+    // return <h2 className="loader w-full h-screen flex justify-center items-center"></h2>;
   }
-
+ 
   return (
-    <div className="container mx-auto mt-8 px-4 ">
-    <div className="rounded-2xl shadow-xl overflow-hidden bg-white dark:bg-blue-gray-900 border border-gray-200 dark:border-blue-gray-800">
+    <div className="container mx-auto mt-8 px-4 min-h-screen flex items-center justify-center">
+    {loading ? <h2 className="loader w-full h-screen flex justify-center items-center"></h2> :   <div className="rounded-2xl shadow-xl overflow-hidden bg-white dark:bg-blue-gray-900 border border-gray-200 dark:border-blue-gray-800">
       
       <div className="px-6 py-5 border-b border-gray-200 dark:border-blue-gray-800">
         <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-900 dark:text-white">
@@ -106,7 +112,7 @@ const AllUsers = () => {
         )}
       </div>
   
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto flex-1">
         <table className="w-full min-w-[700px] text-sm text-left text-gray-700 dark:text-gray-200">
           <thead className="bg-gray-100 dark:bg-blue-gray-800 text-gray-900 dark:text-white">
             <tr>
@@ -180,7 +186,8 @@ const AllUsers = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </div>}
+  
   </div>
   );
 };

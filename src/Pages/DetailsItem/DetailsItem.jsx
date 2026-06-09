@@ -1,19 +1,41 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { Button } from "@material-tailwind/react";
+import Swal from "sweetalert2";
+import api from "../../Api/api";
 const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
   const [detailsProduct, setDetailsProduct] = useState({});
+  const [userInfo, setUserInfo] = useState(null);
+
   const { id } = useParams();
-// console.log(useParams());
+  const navigate = useNavigate();
+  // console.log(useParams());
 
   const getDetails = () => {
-    axios({
+    api({
       method: "get",
       url: `https://e-commerce-nodejs-blush.vercel.app/products/${id}`,
     }).then((data) => setDetailsProduct(data.data.data));
   };
+
+  const getInfoUser = async (id) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken"));
+      const res = await api.get(`https://e-commerce-nodejs-blush.vercel.app/users/profile`, {
+        headers: {
+          authorization: token
+        }
+      });
+      setUserInfo(res.data.data);
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -22,42 +44,64 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
 
     window.scrollTo(0, 0);
     getDetails();
-   
-    
-  }, []);
-//  console.log(detailsProduct);
+    getInfoUser();
 
-  const addition = async(d) => {
+
+  }, []);
+  //  console.log(detailsProduct);
+  // console.log(userInfo);
+
+  const addition = async (d) => {
     // console.log(counter);
-    
+
     const token = JSON.parse(localStorage.getItem("accessToken"));
     let counter = JSON.parse(localStorage.getItem("counter"));
 
-   
 
-      const newCount = counter + 1;
-      localStorage.setItem('counter', JSON.stringify(newCount));
-   
 
-   if (!token) {
-     alert("You must be logged in (accessToken not found).");
-     return;
-   }
-   
-   const res = await axios.post(
-     "https://e-commerce-nodejs-blush.vercel.app/cart/addTocart",
-     {
-       products:[{product:detailsProduct._id,quantity:1}]
-     },
-     {
-       headers: {
-         authorization: token
-       }
-     }
-   );
-    // console.log(res.data);
+    const newCount = counter + 1;
+    localStorage.setItem('counter', JSON.stringify(newCount));
 
-  
+
+    try {
+      if (userInfo && userInfo.role === "admin") {
+        await Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: 'Sorry you are admin you can\'t  add product to cart',
+          confirmButtonColor: "#dc2626"
+        });
+        return;
+      }
+
+       await Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: 'Product added to cart successfully',
+        confirmButtonColor: "#16a34a"
+
+      });
+      const res = await api.post(
+        "https://e-commerce-nodejs-blush.vercel.app/cart/addTocart",
+        {
+          products: [{ product: detailsProduct._id, quantity: 1 }]
+        },
+        {
+          headers: {
+            authorization: token
+          }
+        }
+      );
+      // console.log(res.data);
+
+    
+    
+    } catch (error) {
+      console.log(error);
+
+    }
+
+
   };
 
   return (
@@ -98,8 +142,8 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
                   {detailsProduct.brand
                     ? detailsProduct.brand
                     : detailsProduct.tags
-                    ? detailsProduct.tags.map((im) => im)
-                    : "UNKNOWN"}
+                      ? detailsProduct.tags.map((im) => im)
+                      : "UNKNOWN"}
                 </span>
               </h1>{" "}
               <span className="font-bold dark:text-gray-400">||</span>{" "}
@@ -126,7 +170,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
                     (
                       detailsProduct.price -
                       detailsProduct.price *
-                        (detailsProduct.discountPercentage / 100)
+                      (detailsProduct.discountPercentage / 100)
                     ).toFixed(2)}{" "}
                   EGP
                 </h1>

@@ -52,7 +52,9 @@ import ChangePassword from "./Pages/profileUser/changePassword";
 // ==========================
 import AllUsers from "./Pages/Admin/allUsers";
 import AllCarts from "./Pages/Admin/allCarts";
-
+import AdminDashboard from "./Pages/Admin/AdminDashboard/AdminDashboard";
+import AddProduct from "./Pages/Admin/AdminDashboard/addProduct";
+import UpdateProduct from "./Pages/Admin/AdminDashboard/updateProduct";
 // ==========================
 // 📌 Components
 // ==========================
@@ -63,6 +65,7 @@ import Head from "./Components/Head";
 // 📌 UI Library
 // ==========================
 import { Drawer, IconButton } from "@material-tailwind/react";
+import api from "./Api/api";
 
 const App = () => {
   // ==========================
@@ -80,7 +83,7 @@ const App = () => {
   // ==========================
   const getProducts = async () => {
     try {
-      const res = await axios.get("https://e-commerce-nodejs-blush.vercel.app/products");
+      const res = await api.get("https://e-commerce-nodejs-blush.vercel.app/products");
       setProducts(res.data.products);
     } catch (err) {
       console.log(err);
@@ -89,11 +92,10 @@ const App = () => {
 
   const getCategories = async () => {
     try {
-      const res = await axios.get(
+      const res = await api.get(
         "https://e-commerce-nodejs-blush.vercel.app/products/allCategoriesName"
       );
       setCategoriesNameSideBar(res.data.categoriesName);
-      console.log(res.data.categoriesName);
     } catch (err) {
       console.log(err);
     }
@@ -111,6 +113,19 @@ const App = () => {
     }, 1300);
 
     return () => clearTimeout(timer);
+  }, []);
+
+
+  useEffect(() => {
+    const handler = () => {
+      window.location.href = "/login";
+    };
+
+    window.addEventListener("auth:failed", handler);
+
+    return () => {
+      window.removeEventListener("auth:failed", handler);
+    };
   }, []);
 
   // ==========================
@@ -218,7 +233,9 @@ const App = () => {
           {/* Admin */}
           <Route path="/allUsers" element={<AllUsers />} />
           <Route path="/allCarts" element={<AllCarts />} />
-
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
+          <Route path="/adminDashboard/addProduct" element={<AddProduct />} />
+          <Route path="/adminDashboard/updateProduct/:id" element={<UpdateProduct />} />
         </Routes>
 
         {/* ==========================

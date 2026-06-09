@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../Api/api";
 
 
 
@@ -8,17 +9,17 @@ function Profile() {
   const [userDetail, setUserDetail] = useState({})
   const navigate = useNavigate()
   const getuserDetails = ()=>{
-    axios.get('http://localhost:3000/users/profile',{
+    const token = JSON.parse(localStorage.getItem('accessToken'))
+    api.get('https://e-commerce-nodejs-blush.vercel.app/users/profile',{
       headers:{
-        authorization : JSON.parse(localStorage.getItem('accessToken'))
+        authorization : token
       }
     }).then((data)=>setUserDetail(data.data.data))
   }
   useEffect(()=>{
     getuserDetails()
   },[])
-  // console.log(userDetail);
-  // funciton to go to page (editeProfile)
+
   const goToEditeProfile = ()=>{
     navigate('/editeProfile')
   }

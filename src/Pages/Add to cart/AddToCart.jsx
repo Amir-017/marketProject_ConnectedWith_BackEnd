@@ -4,173 +4,218 @@ import { useNavigate } from "react-router-dom";
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import axios from "axios";
+import api from "../../Api/api";
 
 const AddToCart = ({ }) => {
   const [cart, setCart] = useState([]);
 
   const navigate = useNavigate();
 
-  const getCart = () => {
-    axios
-      .get("https://e-commerce-nodejs-blush.vercel.app/cart", {
-        headers: {
-          authorization: JSON.parse(localStorage.getItem("accessToken")),
-        },
-      })
-      .then((data) => setCart(data?.data.data));
-  };
+ /************************************
+ *           STATE & DATA
+ ************************************/
 
-  useEffect(() => {
-    getCart();
-  }, []);
-  console.log(cart);
+const getCart = () => {
+  api
+    .get("https://e-commerce-nodejs-blush.vercel.app/cart", {
+      headers: {
+        authorization: JSON.parse(localStorage.getItem("accessToken")),
+      },
+    })
+    .then((data) => setCart(data?.data.data));
+};
 
-  const go = () => {
-    navigate("/");
-  };
+useEffect(() => {
+  getCart();
+}, []);
 
-  const TABLE_HEAD = [
-    "Product",
-    "Unit Price",
-    "Quantity",
-    "Total Price",
-    "Actions",
-  ];
-  const incress = async (product) => {
-    const productId = product.product._id;
-    let counter = JSON.parse(localStorage.getItem("counter"));
-    const newCount = counter + 1;
-    localStorage.setItem("counter", JSON.stringify(newCount));
+console.log(cart);
 
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken"));
+/************************************
+ *           NAVIGATION
+ ************************************/
 
-      const res = await axios.patch(
-        `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
-        { quantity: product.quantity + 1 },
-        {
-          headers: {
-            authorization: token,
-          },
-        },
-      );
-      //////////////////
-      setCart(prev =>
-        prev?.map(item =>
-          item.product._id === productId
-            ? {
+const go = () => {
+  navigate("/");
+};
+
+/************************************
+ *           TABLE CONFIG
+ ************************************/
+
+const TABLE_HEAD = [
+  "Product",
+  "Unit Price",
+  "Quantity",
+  "Total Price",
+  "Actions",
+];
+
+/************************************
+ *        INCREASE QUANTITY
+ ************************************/
+
+const incress = async (product) => {
+  const productId = product.product;
+   console.log(product.product);
+   
+  let counter = JSON.parse(localStorage.getItem("counter"));
+  const newCount = counter + 1;
+  localStorage.setItem("counter", JSON.stringify(newCount));
+
+  try {
+    const token = JSON.parse(localStorage.getItem("accessToken"));
+
+    // Optimistic UI update
+    setCart((prev) =>
+      prev?.map((item) =>
+        item.product === productId
+          ? {
               ...item,
-              quantity: item.quantity + 1
+              quantity: item.quantity + 1,
             }
-            : item
-        )
-      );
-      // getCart();
-      // console.log("Cart updated:", res.data);
-      ///////////////////////////
-    } catch (error) {
-      console.error(
-        "Error updating cart:",
-        error.response?.data || error.message,
-      );
-    }
-  };
+          : item
+      )
+    );
 
-  const decress = async (product) => {
-    const productId = product.product._id;
-    let counter = JSON.parse(localStorage.getItem("counter"));
-
-    const newCount = counter - 1;
-    localStorage.setItem("counter", JSON.stringify(newCount));
-
-    console.log(product);
-
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken"));
-
-      const res = await axios.patch(
-        `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
-        { quantity: product.quantity - 1 },
-        {
-          headers: {
-            authorization: token,
-          },
+    const res = await api.patch(
+      `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
+      { quantity: product.quantity + 1 },
+      {
+        headers: {
+          authorization: token,
         },
-      );
-      getCart();
-      // console.log("Cart updated:", res.data);
-    } catch (error) {
-      console.error(
-        "Error updating cart:",
-        error.response?.data || error.message,
-      );
-    }
-  };
-  const clear = async () => {
-    let counter = JSON.parse(localStorage.getItem("counter"));
+      }
+    );
+  } catch (error) {
+    console.error(
+      "Error updating cart:",
+      error.response?.data || error.message
+    );
+  }
+};
 
-    const newCount = 0;
-    localStorage.setItem("counter", JSON.stringify(newCount));
+/************************************
+ *        DECREASE QUANTITY
+ ************************************/
 
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken"));
+const decress = async (product) => {
+  const productId = product.product;
 
-      const res = await axios.delete(
-        `https://e-commerce-nodejs-blush.vercel.app/cart`,
+  let counter = JSON.parse(localStorage.getItem("counter"));
+  const newCount = counter - 1;
+  localStorage.setItem("counter", JSON.stringify(newCount));
 
-        {
-          headers: {
-            authorization: token,
-          },
+  console.log(product);
+
+  try {
+    const token = JSON.parse(localStorage.getItem("accessToken"));
+
+    // Optimistic UI update
+    setCart((prev) =>
+      prev?.map((item) =>
+        item.product === productId
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+            }
+          : item
+      )
+    );
+
+    const res = await api.patch(
+      `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
+      { quantity: product.quantity - 1 },
+      {
+        headers: {
+          authorization: token,
         },
-      );
-      getCart();
-      // console.log("Cart updated:", res.data);
-    } catch (error) {
-      console.error(
-        "Error updating cart:",
-        error.response?.data || error.message,
-      );
-    }
-  };
+      }
+    );
+  } catch (error) {
+    console.error(
+      "Error updating cart:",
+      error.response?.data || error.message
+    );
+  }
+};
 
-  const del = async (product) => {
-    const productId = product.product._id;
-    let counter = JSON.parse(localStorage.getItem("counter"));
+/************************************
+ *            CLEAR CART
+ ************************************/
 
-    const newCount = counter - product.quantity;
-    localStorage.setItem("counter", JSON.stringify(newCount));
+const clear = async () => {
+  let counter = JSON.parse(localStorage.getItem("counter"));
 
-    // console.log(product);
+  const newCount = 0;
+  localStorage.setItem("counter", JSON.stringify(newCount));
 
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken"));
+  try {
+    const token = JSON.parse(localStorage.getItem("accessToken"));
 
-      const res = await axios.delete(
-        `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
+    setCart([]);
 
-        {
-          headers: {
-            authorization: token,
-          },
+    const res = await api.delete(
+      `https://e-commerce-nodejs-blush.vercel.app/cart`,
+      {
+        headers: {
+          authorization: token,
         },
-      );
-      getCart();
-      // console.log("Cart updated:", res.data);
-    } catch (error) {
-      console.error(
-        "Error updating cart:",
-        error.response?.data || error.message,
-      );
-    }
-  };
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
+      }
+    );
+  } catch (error) {
+    console.error(
+      "Error updating cart:",
+      error.response?.data || error.message
+    );
+  }
+};
 
-    window.scrollTo(0, 0);
-  }, []);
+/************************************
+ *        DELETE PRODUCT
+ ************************************/
+
+const del = async (product) => {
+  const productId = product.product;
+
+  let counter = JSON.parse(localStorage.getItem("counter"));
+  const newCount = counter - product.quantity;
+  localStorage.setItem("counter", JSON.stringify(newCount));
+
+  try {
+    const token = JSON.parse(localStorage.getItem("accessToken"));
+
+    setCart((prev) =>
+      prev?.filter((item) => item.product !== productId)
+    );
+
+    const res = await api.delete(
+      `https://e-commerce-nodejs-blush.vercel.app/cart/${productId}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+  } catch (error) {
+    console.error(
+      "Error updating cart:",
+      error.response?.data || error.message
+    );
+  }
+};
+
+/************************************
+ *       SCROLL RESTORE FIX
+ ************************************/
+
+useEffect(() => {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
+  window.scrollTo(0, 0);
+}, []);
   return (
     <div className="w-full ">
       {cart && cart.length == 0 ? (
@@ -255,7 +300,7 @@ const AddToCart = ({ }) => {
 
                         {/* Total Price */}
                         <td className="p-3 text-sm">
-                          {item?.totalPrice.toFixed(2)}
+                          {item?.totalPrice?.toFixed(2)}
                         </td>
 
                         {/* Delete Button */}

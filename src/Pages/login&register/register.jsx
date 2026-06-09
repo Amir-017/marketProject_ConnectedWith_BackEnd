@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../Api/api";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -40,7 +41,7 @@ export default function Register() {
     try {
       setLoading(true);
 
-      const res = await axios.post("https://e-commerce-nodejs-blush.vercel.app/users", {
+      const res = await  api.post("https://e-commerce-nodejs-blush.vercel.app/users", {
         name,
         email,
         password,

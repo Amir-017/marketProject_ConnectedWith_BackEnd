@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../Api/api";
 
 const AllCarts = () => {
   const [carts, setCarts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [userInfo, setUserInfo] = useState(null);
   const getAllCarts = async () => {
     try {
       setLoading(true);
@@ -13,7 +14,7 @@ const AllCarts = () => {
 
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
-      const res = await axios.get("http://localhost:3000/cart/allCart", {
+      const res = await api.get("https://e-commerce-nodejs-blush.vercel.app/cart/allCart", {
         headers: {
           authorization: token,
         },
@@ -30,15 +31,30 @@ const AllCarts = () => {
     }
   };
 
+
+const getInfoUser = async (id) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken"));
+      const res = await api.get(`https://e-commerce-nodejs-blush.vercel.app/users/me`, {
+        headers: {
+          authorization: token
+        }
+      });
+      setUserInfo(res.data.data);
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     getAllCarts();
   }, []);
-
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-gray-100 dark:bg-blue-gray-950">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-          Loading carts...
+        <h1 className="loader text-2xl font-bold text-gray-800 dark:text-white">
+          
         </h1>
       </div>
     );
