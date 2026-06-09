@@ -61,7 +61,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
       await Swal.fire({
         icon: "error",
         title: "Error",
-        text: 'Please login to add product to cart',
+        text: 'Please login first to add product to cart',
         confirmButtonColor: "#dc2626"
       });
       navigate("/login");
