@@ -57,16 +57,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
     const token = JSON.parse(localStorage.getItem("accessToken"));
     let counter = JSON.parse(localStorage.getItem("counter"));
 
-if(!token){
-  await Swal.fire({
-    icon: "error",
-    title: "Error",
-    text: 'Please login to add products to cart',
-    confirmButtonColor: "#dc2626"
-  });
-  navigate("/login");
-  return;
-}
+
 
     const newCount = counter + 1;
     localStorage.setItem('counter', JSON.stringify(newCount));
@@ -106,7 +97,14 @@ if(!token){
     
     
     } catch (error) {
-      console.log(error);
+        await Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: 'Please login to add products to cart',
+    confirmButtonColor: "#dc2626"
+  });
+  navigate("/login");
+  return;
 
     }
 
