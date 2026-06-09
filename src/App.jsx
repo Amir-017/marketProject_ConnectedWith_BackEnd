@@ -53,8 +53,8 @@ import ChangePassword from "./Pages/profileUser/changePassword";
 import AllUsers from "./Pages/Admin/allUsers";
 import AllCarts from "./Pages/Admin/allCarts";
 import AdminDashboard from "./Pages/Admin/AdminDashboard/AdminDashboard";
-import AddProduct from "./Pages/Admin/AdminDashboard/addProduct";
-import UpdateProduct from "./Pages/Admin/AdminDashboard/updateProduct";
+import AddProduct from "./Pages/Admin/AdminDashboard/AddProduct";
+import UpdateProduct from "./Pages/Admin/AdminDashboard/UpdateProduct";
 // ==========================
 // 📌 Components
 // ==========================
