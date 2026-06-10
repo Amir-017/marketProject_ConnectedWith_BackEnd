@@ -57,6 +57,8 @@ const TABLE_HEAD = [
 
 const incress = async (product) => {
   const productId = product.product._id;
+  console.log(productId);
+  console.log(product);
    console.log(product.product);
    
   let counter = JSON.parse(localStorage.getItem("counter"));
@@ -69,7 +71,7 @@ const incress = async (product) => {
     // Optimistic UI update
     setCart((prev) =>
       prev?.map((item) =>
-        item.product === productId
+        item.product._id === productId
           ? {
               ...item,
               quantity: item.quantity + 1,
@@ -114,7 +116,7 @@ const decress = async (product) => {
     // Optimistic UI update
     setCart((prev) =>
       prev?.map((item) =>
-        item.product === productId
+        item.product._id === productId
           ? {
               ...item,
               quantity: item.quantity - 1,
@@ -186,7 +188,7 @@ const deleteProduct = async (product) => {
     const token = JSON.parse(localStorage.getItem("accessToken"));
 
     setCart((prev) =>
-      prev?.filter((item) => item.product !== productId)
+      prev?.filter((item) => item.product._id !== productId)
     );
 
     const res = await api.delete(
