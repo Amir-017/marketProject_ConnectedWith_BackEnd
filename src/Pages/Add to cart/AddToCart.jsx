@@ -56,7 +56,7 @@ const TABLE_HEAD = [
  ************************************/
 
 const incress = async (product) => {
-  const productId = product.product;
+  const productId = product.product._id;
    console.log(product.product);
    
   let counter = JSON.parse(localStorage.getItem("counter"));
@@ -100,7 +100,7 @@ const incress = async (product) => {
  ************************************/
 
 const decress = async (product) => {
-  const productId = product.product;
+  const productId = product.product._id;
 
   let counter = JSON.parse(localStorage.getItem("counter"));
   const newCount = counter - 1;
@@ -175,8 +175,8 @@ const clear = async () => {
  *        DELETE PRODUCT
  ************************************/
 
-const del = async (product) => {
-  const productId = product.product;
+const deleteProduct = async (product) => {
+  const productId = product.product._id;
 
   let counter = JSON.parse(localStorage.getItem("counter"));
   const newCount = counter - product.quantity;
@@ -306,7 +306,7 @@ useEffect(() => {
                         {/* Delete Button */}
                         <td className="p-3 text-sm">
                           <button
-                            onClick={() => del(item)}
+                            onClick={() => deleteProduct(item)}
                             className="px-3 py-1 bg-red-600 dark:bg-red-700 text-white text-sm font-bold rounded-md hover:bg-red-500 dark:hover:bg-red-600 transition"
                             type="button"
                           >

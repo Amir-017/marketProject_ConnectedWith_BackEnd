@@ -35,7 +35,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
     }
   };
 
-
+      
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
