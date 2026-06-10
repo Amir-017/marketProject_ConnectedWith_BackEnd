@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../Api/api";
+import Swal from "sweetalert2";
 
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
@@ -92,7 +93,7 @@ export default function AdminDashboard() {
 
 
   };
-console.log(inputSearch);
+
   return (
     <div className="min-h-screen bg-gray-100 py-10">
       <div className="container mx-auto px-4">
@@ -130,6 +131,7 @@ console.log(inputSearch);
         {/* Cards */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
           {products.map((product) => (
             <div
               key={product._id}
@@ -170,6 +172,12 @@ console.log(inputSearch);
             </div>
           ))}
         </div>
+
+  {products.length === 0 && (
+            <p className="text-center text-gray-500 text-lg mt-10">
+              No products found.
+            </p>
+          )}
 
         {/* Pagination */}
 

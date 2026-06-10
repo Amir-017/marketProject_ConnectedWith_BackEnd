@@ -66,6 +66,7 @@ import Head from "./Components/Head";
 // ==========================
 import { Drawer, IconButton } from "@material-tailwind/react";
 import api from "./Api/api";
+import ProtectedRoute from "./protectRoutes/ProtectRoutes";
 
 const App = () => {
   // ==========================
@@ -164,7 +165,7 @@ const App = () => {
         </Drawer>
       </div>
 
-    
+
       <div className={`${check ? "blur-sm" : ""}`}>
 
         {/* ==========================
@@ -182,9 +183,16 @@ const App = () => {
              Routes
         ========================== */}
         <Routes>
-
           {/* Home */}
           <Route path="/" element={<AllProducts products={products} setProducts={setProducts} />} />
+          {/* Details */}
+          <Route path="/details/:id" element={<DetailsItem aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
+          {/* Auth */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />} />
 
           {/* Categories */}
           <Route path="/beauty" element={<Beatuy Loading={loading} />} />
@@ -212,8 +220,7 @@ const App = () => {
           <Route path="/womens-shoes" element={<WomensShoes Loading={loading} />} />
           <Route path="/womens-watches" element={<WomensWatches Loading={loading} />} />
 
-          {/* Details */}
-          <Route path="/details/:id" element={<DetailsItem aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
+
 
           {/* Cart */}
           <Route path="/adding" element={<AddToCart aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
@@ -221,9 +228,7 @@ const App = () => {
           {/* Search */}
           <Route path="/search" element={<SearchProducts checkSearch={checkSearch} Loading={loading} />} />
 
-          {/* Auth */}
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+
 
           {/* Profile */}
           <Route path="/profile" element={<Profile />} />

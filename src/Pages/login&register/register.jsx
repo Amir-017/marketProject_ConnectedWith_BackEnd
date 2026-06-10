@@ -51,7 +51,7 @@ export default function Register() {
       console.log("Registration response:", res.data);
       
 
-      navigate("/login");
+      navigate("/login", { state: { email,password } });
 
     } catch (error) {
       

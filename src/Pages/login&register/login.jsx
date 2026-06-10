@@ -2,23 +2,27 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../../Api/api";
-
+import { useLocation } from "react-router-dom";
 export default function Login() {
+
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
- const [error , setError] = useState('')
+  const [error, setError] = useState('')
   const navigate = useNavigate();
+  const location = useLocation();
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email || !password) {
-        
-        setError('You must fill all inputs') 
+
+      setError('You must fill all inputs')
       return;
     }
-  
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Email format is invalid');
@@ -41,7 +45,7 @@ export default function Login() {
       }, { withCredentials: true });
 
       console.log("Login response:", res.data);
-      
+
       localStorage.setItem("accessToken", JSON.stringify(res.data.accesstoken))
       localStorage.setItem("userName", JSON.stringify(res.data.name));
       // Example: redirect to home page after login

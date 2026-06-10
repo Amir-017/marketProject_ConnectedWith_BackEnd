@@ -95,7 +95,7 @@ const getInfoUser = async (id) => {
                 <div className="px-6 py-4 border-b border-gray-200 dark:border-blue-gray-800 bg-gray-50 dark:bg-blue-gray-800">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                      User: {cart.userName?.name || "Unknown User"}
+                      User: <span className="font-normal">{cart.userName?.name || "Unknown User"}</span>
                     </h2>
 
                     <span className="inline-block w-fit px-4 py-2 rounded-full text-sm font-semibold bg-blue-100 text-blue-700 dark:bg-blue-gray-700 dark:text-white">
