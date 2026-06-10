@@ -35,7 +35,7 @@ function ChangePassword() {
     try{
 
       const res = await api.patch(
-        "https://e-commerce-nodejs-blush.vercel.app/users/changePassword",
+        "https://e-commerce-nodejs-blush.vercel.app/users/convertPassword",
         {
           currentPassword,
           newPassword
