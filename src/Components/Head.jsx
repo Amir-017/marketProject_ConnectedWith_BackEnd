@@ -10,7 +10,7 @@ import {
 } from "@material-tailwind/react";
 import { MdOutlineMenuOpen } from "react-icons/md";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CiShoppingCart, CiSun } from "react-icons/ci";
 import { FaRegMoon } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
@@ -32,6 +32,8 @@ const Head = ({
   const counter = JSON.parse(localStorage.getItem("counter"));
   const decoded = token ? jwtDecode(token) : null;
   const navigate = useNavigate();
+  const location = useLocation();
+
   ////////////// functions //////////////
   // close nav when window resize
   const handleWindowResize = () =>
@@ -79,11 +81,21 @@ const Head = ({
       return null;
     }
   };
+  // get cart when component mount (update cart quantity in header)
+  useEffect(() => {
+  const handleCartUpdate = () => {
+    getCart();
+  };
+  window.addEventListener("cartUpdated", handleCartUpdate);
+  return () => {
+    window.removeEventListener("cartUpdated", handleCartUpdate);
+  };
+}, []);
 
-  // useEffect(() => {
-  //   getCart();
-  // }, [JSON.parse(localStorage.getItem("counter"))]);
-  // console.log("cart in head", cart);
+ // close nav when click on  any link or any interaction in header
+  useEffect(() => {
+    setOpenNav(false);
+  }, [location.pathname]);
   return (
 
     <Navbar
@@ -157,7 +169,7 @@ const Head = ({
             <div className="relative group">
               <Badge
                 content={cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0}
-                className={counter >= 1 ? "bg-green-900" : "bg-red-900"}
+                className={cart && cart.length > 0 ? "bg-green-900" : "bg-red-900"}
               >
                 <Link to="/adding">
                   <CiShoppingCart className="text-4xl text-white hover:text-green-300 hover:dark:text-[#9b9ca5]" />
@@ -224,6 +236,12 @@ const Head = ({
                           className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
                         >
                           Reviews Management
+                        </Link>
+                        <Link
+                          to="/allOrders"
+                          className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                        >
+                          All Orders
                         </Link>
                       </div>
                     ) : null}
@@ -335,6 +353,13 @@ const Head = ({
                           >
                             Reviews Management
                           </Link>
+
+                          <Link
+                            to="/allOrders"
+                            className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                          >
+                            All Orders
+                          </Link>
                         </div>
                       ) : null}
                       <button
@@ -427,7 +452,7 @@ const Head = ({
                 >
                   <Badge
                     content={cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0}
-                    className={counter >= 1 ? "bg-green-900" : "bg-red-900"}
+                    className={cart && cart.length > 0 ? "bg-green-900" : "bg-red-900"}
                   >
                     <Link to="/adding">
                       <CiShoppingCart className="text-3xl text-white hover:text-green-300" />

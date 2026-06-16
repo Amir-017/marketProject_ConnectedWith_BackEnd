@@ -53,7 +53,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
   const addToCart = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken"));
     let counter = JSON.parse(localStorage.getItem("counter"));
-    localStorage.setItem('counter', JSON.stringify(newCount));
+    // localStorage.setItem('counter', JSON.stringify(newCount));
 
     const newCount = counter + 1;
 
@@ -67,6 +67,9 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
         });
         return;
       }
+
+
+    
 
       await Swal.fire({
         icon: "success",
@@ -86,7 +89,9 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
           }
         }
       );
-
+     
+       // to make header know that cart is updated and update the counter in header
+      window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       await Swal.fire({
         icon: "error",
@@ -115,7 +120,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
                   <img
                     src={item}
                     alt={`product-${i}`}
-                    className=" h-[220px]  transition-transform duration-300 group-hover:scale-105"
+                    className=" h-[220px]  transition-transform duration-300 group-hover:scale-105 flex justify-center items-center w-full"
                   />
 
                 </div>

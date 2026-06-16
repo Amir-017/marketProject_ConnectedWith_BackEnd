@@ -11,7 +11,7 @@ const AddToCart = ({ }) => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  
+
   /************************************
   *           STATE & DATA
   ************************************/
@@ -88,6 +88,8 @@ const AddToCart = ({ }) => {
           },
         }
       );
+      // to make header know that cart is updated and update the counter in header
+      window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -133,6 +135,8 @@ const AddToCart = ({ }) => {
           },
         }
       );
+      // to make header know that cart is updated and update the counter in header
+      window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -173,11 +177,11 @@ const AddToCart = ({ }) => {
             }
           );
           navigate("/");
-
         }
-
       });
 
+      // to make header know that cart is updated and update the counter in header
+      window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -211,6 +215,8 @@ const AddToCart = ({ }) => {
           },
         }
       );
+      // to make header know that cart is updated and update the counter in header
+      window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error(
         "Error updating cart:",
@@ -250,138 +256,182 @@ const AddToCart = ({ }) => {
             </button>
           </div>
         </div>
-      ) 
-      : (
-        // {loading ?} 
-        <div className="flex flex-col w-full min-h-screen justify-center items-center">
-  {loading ?     <div className="">
-          <div className="container mx-auto mt-10    overflow-auto    w-[80%]  flex flex-col justify-center ">
-            <h1 className="w-full text-3xl text-center block md:hidden dark:text-white text-black my-5">
-              | This Table Is OverFlow |
-            </h1>
-            <Card className="w-full overflow-x-auto rounded-xl shadow-lg">
-              <table className="min-w-full table-auto text-left border-collapse">
-                {/* Table Head */}
-                <thead>
-                  <tr className="bg-blue-gray-50 dark:bg-gray-800">
-                    {TABLE_HEAD.map((head, index) => (
-                      <th
-                        key={index}
-                        className="p-3 text-center text-sm font-medium text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700"
-                      >
-                        {head}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
+      )
+        : (
+          // {loading ?} 
+          <div className="flex flex-col w-full min-h-screen justify-center items-center">
+            {loading ? <div className="">
+              <div className="container mx-auto  py-10">
 
-                {/* Table Body */}
-                <tbody>
-                  {cart?.map((item, index) => {
-                    const isLast = index === cart.length - 1;
-                    return (
-                      <tr
-                        key={index}
-                        className={`text-center dark:bg-[#252B43] bg-white dark:text-white text-black ${!isLast &&
-                          "border-b border-gray-200 dark:border-gray-700"
-                          }`}
-                      >
-                        {/* Product Title */}
-                        <td className="p-3 text-sm">{item.product?.title}</td>
+                <h1 className="block md:hidden text-center text-lg font-semibold mb-5 text-gray-700 dark:text-gray-300">
+                  👈 Swipe Horizontally To View The Full Table
+                </h1>
 
-                        {/* Product Price */}
-                        <td className="p-3 text-sm">{item.product?.price}</td>
+                <Card className="overflow-x-auto rounded-3xl border border-gray-200 bg-white shadow-2xl dark:border-white/10 dark:bg-[#1c2135]">
 
-                        {/* Quantity Controls */}
-                        <td className="p-3">
-                          <div className="inline-flex rounded-md shadow-sm bg-black">
-                            <button
-                              onClick={() => decress(item)}
-                              className="px-3 py-1 bg-slate-800 dark:bg-gray-700 text-white text-sm font-medium rounded-l-md hover:bg-slate-700 dark:hover:bg-gray-600 transition"
-                              type="button"
-                              disabled={item.quantity <= 1}
-                            >
-                              -
-                            </button>
+                  <table className="min-w-full table-auto text-left border-collapse">
 
-                            <span className="px-4 py-1 bg-slate-700 dark:bg-gray-600 text-white text-sm font-medium">
-                              {item?.quantity}
-                            </span>
-                            <button
-                              onClick={() => incress(item)}
-                              className="px-3 py-1 bg-slate-800 dark:bg-gray-700 text-white text-sm font-medium rounded-r-md hover:bg-slate-700 dark:hover:bg-gray-600 transition"
-                              type="button"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </td>
-
-                        {/* Total Price */}
-                        <td className="p-3 text-sm">
-                          {(item?.product?.price * item?.quantity)?.toFixed(2)}
-                        </td>
-
-                        {/* Delete Button */}
-                        <td className="p-3 text-sm">
-                          <button
-                            onClick={() => deleteProduct(item)}
-                            className="px-3 py-1 bg-red-600 dark:bg-red-700 text-white text-sm font-bold rounded-md hover:bg-red-500 dark:hover:bg-red-600 transition"
-                            type="button"
+                    {/* HEADER */}
+                    <thead>
+                      <tr className="bg-gradient-to-r from-green-900 to-green-700 dark:from-[#2b3250] dark:to-[#1f2438]">
+                        {TABLE_HEAD.map((head, index) => (
+                          <th
+                            key={index}
+                            className="px-6 py-4 text-center text-sm font-bold uppercase tracking-wider text-white"
                           >
-                            Delete
-                          </button>
-                        </td>
+                            {head}
+                          </th>
+                        ))}
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </Card>
-          </div>
-          <div className="w-[80%] container mx-auto dark:bg-[#252B43] bg-gray-200 rounded-xl mt-5 flex flex-col mb-5 shadow-lg p-4">
-            {/* Header: Clear + Total Items */}
-            <div className="flex flex-col md:flex-row justify-between items-center w-full px-3 mt-2">
-              {/* Clear Button */}
-              <div className="flex items-center">
-                <Button
-                  onClick={clear}
-                  className="flex items-center gap-2 font-bold text-[0.8rem] bg-red-900 text-white hover:bg-red-800 hover:shadow-lg transition-all px-4 py-2 rounded-md"
-                >
-                  <FaRegTrashCan className="text-sm" />
-                  <span>Clear Data</span>
-                </Button>
+                    </thead>
+
+                    {/* BODY */}
+                    <tbody className="divide-y divide-gray-200 dark:divide-white/10">
+
+                      {cart?.map((item, index) => {
+                        const isLast = index === cart.length - 1;
+
+                        return (
+                          <tr
+                            key={index}
+                            className={`
+                text-center transition-all duration-200
+                bg-white hover:bg-gray-50
+                dark:bg-[#1c2135] dark:hover:bg-[#252b45]
+                text-gray-900 dark:text-white
+                ${!isLast ? "border-b border-gray-200 dark:border-white/10" : ""}
+              `}
+                          >
+
+                            {/* PRODUCT TITLE */}
+                            <td className="px-6 py-5 text-sm font-medium">
+                              {item.product?.title}
+                            </td>
+
+                            {/* PRICE */}
+                            <td className="px-6 py-5 text-sm text-emerald-600 dark:text-emerald-400 font-semibold">
+                              {item.product?.price} EGP
+                            </td>
+
+                            {/* QUANTITY */}
+                            <td className="px-6 py-5">
+
+                              <div className="inline-flex items-center overflow-hidden rounded-xl border border-gray-200 dark:border-white/10">
+
+                                <button
+                                  onClick={() => decress(item)}
+                                  disabled={item.quantity <= 1}
+                                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-[#2a2f4a] dark:hover:bg-[#343b5c] text-white transition disabled:opacity-40"
+                                >
+                                  -
+                                </button>
+
+                                <span className="px-5 py-2 bg-white dark:bg-[#1c2135] text-gray-900 dark:text-white font-semibold">
+                                  {item.quantity}
+                                </span>
+
+                                <button
+                                  onClick={() => incress(item)}
+                                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-[#2a2f4a] dark:hover:bg-[#343b5c] text-white transition"
+                                >
+                                  +
+                                </button>
+
+                              </div>
+
+                            </td>
+
+                            {/* TOTAL */}
+                            <td className="px-6 py-5 text-sm font-bold text-green-700 dark:text-green-400">
+                              {(item.product?.price * item.quantity).toFixed(2)} EGP
+                            </td>
+
+                            {/* DELETE */}
+                            <td className="px-6 py-5">
+                              <button
+                                onClick={() => deleteProduct(item)}
+                                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold transition"
+                              >
+                                Delete
+                              </button>
+                            </td>
+
+                          </tr>
+                        );
+                      })}
+
+                    </tbody>
+
+                  </table>
+
+                </Card>
               </div>
+       <div className="w-full max-w-[1200px] mx-auto px-3 sm:px-6 mt-6 mb-10">
 
-              {/* Total Items */}
-              <h1 className="text-xl mt-3 md:mt-0 text-black dark:text-white text-center">
-                Total ({cart.length || 0}) Items :{" "}
-                <span className="dark:text-blue-gray-400 text-green-900 font-bold underline">
-                  {cart && cart.length > 0
-                    ? cart
-                      .reduce((sum, item) => sum + (item?.product?.price * item?.quantity), 0)
-                      .toFixed(2)
-                    : "0.00"}{" "}
-                  EGP
-                </span>
-              </h1>
-            </div>
+  <div className="w-full rounded-3xl border border-gray-200 bg-white p-4 sm:p-6 shadow-xl dark:border-white/10 dark:bg-[#1c2135] overflow-hidden">
 
-            {/* Checkout Button */}
-            <div className="w-full mt-5 flex justify-center md:justify-end items-center">
-              <Button
-                color="green"
-                className="bg-green-900 dark:bg-[#282d45] hover:shadow-lg text-white font-bold px-6 py-2 rounded-md transition-all"
-              >
-                Check Out
-              </Button>
-            </div>
+    {/* TOP SECTION */}
+    <div className="flex flex-col justify-between items-center gap-6 text-center md:text-left w-full">
+
+      {/* CLEAR BUTTON */}
+      <Button
+        onClick={clear}
+        className="w-full md:w-auto flex items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3 font-bold text-white transition hover:bg-red-700 hover:shadow-lg"
+      >
+        <FaRegTrashCan className="text-sm" />
+        Clear Cart
+      </Button>
+
+      {/* TOTAL INFO */}
+      <div className="text-center w-full md:w-auto">
+
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Total Items
+        </p>
+
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+          {cart.length || 0} Items
+        </h2>
+
+        <p className="mt-2 text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400">
+          {cart && cart.length > 0
+            ? cart
+                .reduce(
+                  (sum, item) =>
+                    sum + item.product.price * item.quantity,
+                  0
+                )
+                .toFixed(2)
+            : "0.00"}{" "}
+          EGP
+        </p>
+
+      </div>
+
+    </div>
+
+    {/* DIVIDER */}
+    <div className="my-5 h-px w-full bg-gray-200 dark:bg-white/10" />
+
+    {/* CHECKOUT BUTTON */}
+    <div className="flex justify-center md:justify-end">
+
+      <Button
+        onClick={() => navigate("/order")}
+        className="w-full sm:w-auto rounded-xl bg-gradient-to-r from-green-700 to-green-900 px-6 sm:px-8 py-3 font-bold text-white transition hover:scale-105 hover:shadow-lg dark:from-[#2b3250] dark:to-[#1f2438]"
+      >
+        Checkout →
+      </Button>
+
+    </div>
+
+  </div>
+</div>
+            </div> : <div className="loader w-full h-full flex items-center justify-center"></div>}
+
           </div>
-        </div> :     <div className="loader w-full h-full flex items-center justify-center"></div>}
 
-        </div>
-    
-      )}
+        )}
     </div>
   );
 };

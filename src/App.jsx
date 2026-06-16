@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes,useLocation } from "react-router-dom";
 import axios from "axios";
 
 // ==========================
@@ -70,6 +70,8 @@ import ProtectedRoute from "./protectRoutes/ProtectRoutes";
 import { AllReviews } from "./Pages/DetailsItem/ReviewsProducts/AllReviews";
 import AddReview  from "./Pages/DetailsItem/ReviewsProducts/AddReview";
 import { ReviewsManagements } from "./Pages/Admin/ReviewsManagements";
+import { OrderUser } from "./Order User/OrderUser";
+import { AllOrders } from "./Pages/Admin/AllOrders";
 const App = () => {
   // ==========================
   // 📌 State
@@ -81,7 +83,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [categoriesNameSideBar, setCategoriesNameSideBar] = useState([]);
-
+  const location = useLocation();
   // ==========================
   // ==========================
   const getProducts = async () => {
@@ -142,7 +144,10 @@ const App = () => {
     setCheck(false);
     setOpen(false);
   };
-
+ // ==========================
+  // check if user in login or resigster page to hide header and footer
+  const hideHeaderFooter = location.pathname === "/login" || location.pathname === "/register";
+  // ==========================
   return (
     <div className="bg-white dark:bg-blue-gray-900">
 
@@ -173,13 +178,15 @@ const App = () => {
         {/* ==========================
              Header
         ========================== */}
-        <Head
-          openDrawer={openDrawer}
-          setCheckSearch={setCheckSearch}
-          checkSearch={checkSearch}
-          aboutAdding={aboutAdding}
-          categoriesNameSideBar={categoriesNameSideBar}
-        />
+        {!hideHeaderFooter && (
+          <Head
+            openDrawer={openDrawer}
+            setCheckSearch={setCheckSearch}
+            checkSearch={checkSearch}
+            aboutAdding={aboutAdding}
+            categoriesNameSideBar={categoriesNameSideBar}
+          />
+        )}
 
         {/* ==========================
              Routes
@@ -228,7 +235,9 @@ const App = () => {
 
           {/* Cart */}
           <Route path="/adding" element={<AddToCart aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
-
+          {/* Order */}
+          <Route path="/order" element={<OrderUser />} />
+          
           {/* Search */}
           <Route path="/search" element={<SearchProducts checkSearch={checkSearch} Loading={loading} />} />
 
@@ -246,11 +255,12 @@ const App = () => {
           <Route path="/adminDashboard/addProduct" element={<AddProduct />} />
           <Route path="/adminDashboard/updateProduct/:id" element={<UpdateProduct />} />
           <Route path="/reviewsManagement" element={<ReviewsManagements />} />
+          <Route path="/allOrders" element={<AllOrders />} />
         </Routes>
 
         {/* ==========================
         ========================== */}
-        <Footer />
+        {!hideHeaderFooter && <Footer />}
 
       </div>
     </div>
