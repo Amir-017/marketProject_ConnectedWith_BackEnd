@@ -51,9 +51,8 @@ export const OrderUser = () => {
             setCart(res.data.data || []);
         } catch (err) {
             console.log(err);
-        } finally {
-            setLoadingCart(false);
-        }
+        } 
+     
     };
 
     useEffect(() => {
