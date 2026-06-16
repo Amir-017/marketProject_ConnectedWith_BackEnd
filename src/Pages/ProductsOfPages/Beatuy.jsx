@@ -51,18 +51,18 @@ const Beatuy = () => {
             <div className="w-full grid grid-cols-1 gap-4 justify-items-center items-center md:grid-cols-3 lg:grid-cols-4 pb-10">
               {beatuy.map((prod, i) => (
                 <div className="" key={i}>
-                  <Card className="  mt-10 border-[1px] border-gray-300 shadow-lg hover:shadow-2xl hover:shadow-black dark:hover:shadow-white transition-shadow duration-300 rounded-lg overflow-hidden ">
-                    <CardHeader color="white" className="relative h-96">
+                  <Card className="mt-10 border-[1px] border-gray-300 shadow-lg hover:shadow-2xl hover:shadow-black dark:hover:shadow-white transition-shadow duration-300 rounded-lg overflow-hidden dark:bg-blue-gray-800 bg-gray-50">
+                    <CardHeader color="" className="relative h-96 dark:bg-blue-gray-800 bg-gray-50">
                       <div className="py-3 ">
                         <h1 className="bg-gradient-to-r from-green-500 to-green-700 dark:from-blue-gray-700 dark:to-blue-gray-900 w-28 h-14 text-center pt-3 text-white rounded-lg font-bold shadow-md">
                           {prod.category}
                         </h1>
 
-                        {prod.images.slice(-1).map((im, it) => (
+                        {prod.images.slice(-1).map((image, index) => (
                           <img
                             alt="card-image"
-                            src={im}
-                            key={it}
+                            src={image}
+                            key={index}
                             className="w-full h-56 object-cover rounded-lg mt-3 transition-transform duration-300 hover:scale-105 "
                           />
                         ))}
@@ -76,7 +76,7 @@ const Beatuy = () => {
                         className="mb-2 font-bold text-center dark:text-white"
                       >
                         Brand:{" "}
-                        <span className="text-green-600 font-medium">
+                        <span className="text-green-600 dark:text-blue-gray-400 font-medium">
                           {prod.brand
                             ? prod.brand
                             : prod.tags
@@ -90,7 +90,7 @@ const Beatuy = () => {
                       </Typography>
                       <Typography className="text-black text-center font-bold mt-3 dark:text-white">
                         Price:{" "}
-                        <span className="text-green-600 underline font-medium">
+                        <span className="text-green-600 dark:text-blue-gray-400 underline font-medium">
                           ${prod.price}
                         </span>
                       </Typography>
@@ -114,7 +114,6 @@ const Beatuy = () => {
         </div>
       ) : (
         <div className="w-full h-[80vh] dark:bg-blue-gray-900 bg-[#EAEAEA] flex justify-center items-center ">
-          {/* <Spinner color="green" className="w-16 h-16 " /> */}
           <div className="loader"></div>
         </div>
       )}

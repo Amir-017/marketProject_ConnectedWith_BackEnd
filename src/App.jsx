@@ -67,7 +67,9 @@ import Head from "./Components/Head";
 import { Drawer, IconButton } from "@material-tailwind/react";
 import api from "./Api/api";
 import ProtectedRoute from "./protectRoutes/ProtectRoutes";
-
+import { AllReviews } from "./Pages/DetailsItem/ReviewsProducts/AllReviews";
+import AddReview  from "./Pages/DetailsItem/ReviewsProducts/AddReview";
+import { ReviewsManagements } from "./Pages/Admin/ReviewsManagements";
 const App = () => {
   // ==========================
   // 📌 State
@@ -185,14 +187,16 @@ const App = () => {
         <Routes>
           {/* Home */}
           <Route path="/" element={<AllProducts products={products} setProducts={setProducts} />} />
-          {/* Details */}
+          {/* Details & Reviews */}
           <Route path="/details/:id" element={<DetailsItem aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
+          <Route path="/reviews/:id" element={<AllReviews />} />
+          <Route path="/addReview/:id" element={<AddReview />} />
           {/* Auth */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
           {/* Protected Routes */}
-          <Route element={<ProtectedRoute />} />
+          {/* <Route element={<ProtectedRoute />} /> */}
 
           {/* Categories */}
           <Route path="/beauty" element={<Beatuy Loading={loading} />} />
@@ -241,6 +245,7 @@ const App = () => {
           <Route path="/adminDashboard" element={<AdminDashboard />} />
           <Route path="/adminDashboard/addProduct" element={<AddProduct />} />
           <Route path="/adminDashboard/updateProduct/:id" element={<UpdateProduct />} />
+          <Route path="/reviewsManagement" element={<ReviewsManagements />} />
         </Routes>
 
         {/* ==========================

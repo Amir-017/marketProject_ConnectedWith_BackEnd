@@ -6,12 +6,13 @@ import { Button } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 import api from "../../Api/api";
 const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
+  //////////////// States and Hooks ////////////////
   const [detailsProduct, setDetailsProduct] = useState({});
   const [userInfo, setUserInfo] = useState(null);
-
   const { id } = useParams();
   const navigate = useNavigate();
-  // console.log(useParams());
+
+  //////////////// Functions ////////////////
 
   const getDetails = () => {
     api({
@@ -19,7 +20,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
       url: `https://e-commerce-nodejs-blush.vercel.app/products/${id}`,
     }).then((data) => setDetailsProduct(data.data.data));
   };
-
+  //
   const getInfoUser = async (id) => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken"));
@@ -35,33 +36,26 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
     }
   };
 
-      
+  /////////////////// Effects ////////////////
+
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-
     window.scrollTo(0, 0);
     getDetails();
     getInfoUser();
-
-
   }, []);
-  //  console.log(detailsProduct);
-  // console.log(userInfo);
 
-  const addition = async (d) => {
-    // console.log(counter);
 
+  /////////////////// function that add product to cart ////////////////
+  const addToCart = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken"));
     let counter = JSON.parse(localStorage.getItem("counter"));
-
-
-
-    const newCount = counter + 1;
     localStorage.setItem('counter', JSON.stringify(newCount));
 
+    const newCount = counter + 1;
 
     try {
       if (userInfo && userInfo.role === "admin") {
@@ -74,7 +68,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
         return;
       }
 
-       await Swal.fire({
+      await Swal.fire({
         icon: "success",
         title: "Success",
         text: 'Product added to cart successfully',
@@ -92,128 +86,127 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
           }
         }
       );
-      // console.log(res.data);
 
-    
-    
     } catch (error) {
-        await Swal.fire({
-    icon: "error",
-    title: "Error",
-    text: 'Please login to add products to cart',
-    confirmButtonColor: "#dc2626"
-  });
-  navigate("/login");
-  return;
-
+      await Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: 'Please login to add products to cart',
+        confirmButtonColor: "#dc2626"
+      });
+      navigate("/login");
+      return;
     }
-
-
   };
-
   return (
-    <div className="w-full min-h-[90vh] flex flex-col justify-center  dark:bg-blue-gray-900 bg-[#EAEAEA] ">
-      <div className="w-full  bg-white dark:bg-blue-gray-800 rounded-xl container mx-auto   ">
-        <div className="w-full flex flex-col md:flex-row ">
-          <div className="w-full md:w-[60%] flex flex-col justify-center items-center  ">
-            {detailsProduct.images?.map((item, i) => (
-              <div className="w-full " key={i}>
-                <div className="  flex justify-center items-center">
-                  {i == 0 && (
-                    <img src={item} alt="" className="w-[40%] md:w-[45%] " />
-                  )}
-                </div>
-              </div>
-            ))}
-            {/*  */}
-          </div>
-          <div className="w-full md:w-[45%] me-5">
-            <h1 className="text-black dark:text-white font-bold  text-center md:text-start mt-5">
-              {detailsProduct ? detailsProduct.title : ""}
-            </h1>
-            <hr className="border-t-2 border-gray-300 mt-2  dark:border-black" />
-            <h2 className="text-gray-600 mt-5 dark:text-gray-200 ms-2 md:ms-0 ">
-              {detailsProduct ? detailsProduct.description : ""}
-            </h2>
-            <div className=" w-full  flex flex-col md:flex-row gap-y-3  gap-x-3 mt-10 justify-center items-center md:items-start md:justify-start">
-              <h1 className="font-bold dark:text-white   ">
-                Rating :{" "}
-                <span className="dark:text-blue-gray-400 text-green-500 underline">
-                  {detailsProduct ? detailsProduct.rating : ""}
-                </span>
-              </h1>{" "}
-              <span className="font-bold dark:text-gray-400">||</span>{" "}
-              <h1 className="font-bold dark:text-white text-center">
-                Brand :{" "}
-                <span className="text-green-500 underline dark:text-blue-gray-400">
-                  {detailsProduct.brand
-                    ? detailsProduct.brand
-                    : detailsProduct.tags
-                      ? detailsProduct.tags.map((im) => im)
-                      : "UNKNOWN"}
-                </span>
-              </h1>{" "}
-              <span className="font-bold dark:text-gray-400">||</span>{" "}
-              <h1 className="font-bold dark:text-white">
-                Category :{" "}
-                <span className="text-green-500 underline dark:text-blue-gray-400">
-                  {detailsProduct ? detailsProduct.category : ""}
-                </span>
-              </h1>{" "}
-            </div>
-            <div className="w-full mt-16 dark:bg-[#252B43] bg-gray-200  rounded-xl container ps-2 dark:text-gray-400 text-gray-600 ">
-              <div className="flex gap-x-2 pt-5 justify-center md:justify-start">
-                <h1 className="font-bold line-through me-1 ">
-                  <span className=" me-1">
-                    {detailsProduct ? detailsProduct.price : ""}
-                  </span>
-                  EGP
-                </h1>
-                <span className="text-grya-600">inclusive in takes</span>
-              </div>
-              <div className="flex gap-x-4 mt-5 h-16 justify-center md:justify-start">
-                <h1 className=" font-bold dark:text-green-500 text-green-900 text-[1.5rem]">
-                  {detailsProduct &&
-                    (
-                      detailsProduct.price -
-                      detailsProduct.price *
-                      (detailsProduct.discountPercentage / 100)
-                    ).toFixed(2)}{" "}
-                  EGP
-                </h1>
+    <div className="w-full min-h-[90vh] flex items-center justify-center bg-[#EAEAEA] dark:bg-blue-gray-900 py-10">
+      {detailsProduct._id ? <div className="w-full max-w-6xl bg-white dark:bg-blue-gray-800 rounded-2xl shadow-xl overflow-hidden">
 
-                <div className="text-white    italic text-xl">
-                  <h1 className="dark:bg-[#2c324a] bg-green-800 px-3 py-1 rounded">
-                    {detailsProduct ? detailsProduct.discountPercentage : ""} %
-                    off
-                  </h1>
+        <div className="flex flex-col lg:flex-row">
+
+          {/* ================= LEFT: GALLERY ================= */}
+          <div className="w-full lg:w-3/5 p-6">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
+
+              {detailsProduct.images?.map((item, i) => (
+                <div key={i} className=" overflow-hidden rounded-xl shadow-md group ">
+
+                  <img
+                    src={item}
+                    alt={`product-${i}`}
+                    className=" h-[220px]  transition-transform duration-300 group-hover:scale-105"
+                  />
+
                 </div>
-              </div>
+              ))}
+
             </div>
-            <div className="flex gap-x-3 mt-10 mb-2 justify-center md:justify-start">
-              <div className="relative flex ">
-                <Button
-                  onClick={() => addition(detailsProduct)}
-                  color="green"
-                  size="lg"
-                  className="dark:bg-[#232a45]   hover:dark:dark:bg-[#181f39]  bg-green-800 hover:bg-green-900 hover:shadow capitalize font-bold "
-                >
-                  add to cart
-                </Button>
-                <CiShoppingCart className="text-2xl text-white font-bold absolute right-0  top-3" />
+
+          </div>
+
+          {/* ================= RIGHT: DETAILS ================= */}
+          <div className="w-full lg:w-2/5 p-6 flex flex-col justify-center">
+
+            {/* Title */}
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center lg:text-start">
+              {detailsProduct?.title}
+            </h1>
+
+            <p className="text-gray-600 dark:text-gray-300 mt-3 text-sm leading-relaxed text-center lg:text-start">
+              {detailsProduct?.description}
+            </p>
+
+            <hr className="my-4 border-gray-300 dark:border-gray-700" />
+
+            {/* Info Row */}
+            <div className="flex flex-wrap gap-4 text-sm justify-center lg:justify-start">
+
+              <p className="font-semibold text-gray-800 dark:text-white">
+                Rating: <span className="text-green-600 dark:text-blue-gray-300">{detailsProduct?.rating}</span>
+              </p>
+
+              <p className="font-semibold text-gray-800 dark:text-white">
+                Brand:{" "}
+                <span className="text-green-600 dark:text-blue-gray-300">
+                  {detailsProduct.brand || detailsProduct.tags?.join(", ") || "UNKNOWN"}
+                </span>
+              </p>
+
+              <p className="font-semibold text-gray-800 dark:text-white">
+                Category: <span className="text-green-600 dark:text-blue-gray-300">{detailsProduct?.category}</span>
+              </p>
+
+            </div>
+
+            {/* PRICE BOX */}
+            <div className="mt-6 p-4 rounded-xl bg-gray-100 dark:bg-[#232a45]">
+
+              <p className="line-through text-gray-500 text-sm">
+                {detailsProduct?.price} EGP
+              </p>
+
+              <div className="flex items-center justify-between mt-2">
+
+                <h2 className="text-xl font-bold text-green-700 dark:text-blue-gray-300">
+                  {(
+                    detailsProduct?.price -
+                    detailsProduct?.price * (detailsProduct?.discountPercentage / 100)
+                  ).toFixed(2)}{" "}
+                  EGP
+                </h2>
+
+                <span className="bg-green-700 dark:bg-blue-gray-700 text-white px-3 py-1 rounded-md text-sm">
+                  {detailsProduct?.discountPercentage}% OFF
+                </span>
+
               </div>
+
+            </div>
+
+            {/* ACTION BUTTONS */}
+            <div className="flex gap-3 mt-6 justify-center lg:justify-start">
+
+              <Button
+                onClick={() => addToCart()}
+                className="bg-green-700 hover:bg-green-800 dark:bg-blue-gray-700 dark:hover:bg-blue-gray-600 font-bold flex items-center gap-2"
+              >
+                Add to Cart <CiShoppingCart className="text-xl" />
+              </Button>
 
               <button
-                className="font-bold dark:bg-[#232a45]   hover:dark:dark:bg-[#181f39]  capitalize rounded-md bg-green-800 hover:bg-green-900 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-lg hover:shadow-lg focus:bg-green-700 focus:shadow-none active:bg-green-700  active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
-                type="button"
+                onClick={() => navigate(`/reviews/${detailsProduct._id}`)}
+                className="bg-lime-700 hover:bg-lime-600 text-white px-5 py-2 rounded-md font-bold dark:bg-blue-gray-700 dark:hover:bg-blue-gray-600"
               >
-                buy now
+                All Reviews
               </button>
+
             </div>
+            {/* ================= END OF DETAILS ================= */}
           </div>
         </div>
-        {/* <div className="w-full dark:bg-blue-gray-900 bg-[#EAEAEA] "></div> */}
-      </div>
+      </div> : <div className="loader w-full h-full flex items-center justify-center"></div>}
+
     </div>
   );
 };

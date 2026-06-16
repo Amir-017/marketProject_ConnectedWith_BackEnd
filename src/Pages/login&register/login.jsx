@@ -116,7 +116,7 @@ export default function Login() {
           <button
             type="button"
             onClick={goToRegister}
-            className="text-green-600 dark:text-black hover:underline font-medium"
+            className="text-green-600 dark:text-gray-600 hover:underline font-medium"
           >
             Register
           </button>

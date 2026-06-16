@@ -13,7 +13,7 @@ import {
   Carousel,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-const AllProducts = ({ products,setProducts }) => {
+const AllProducts = ({ products, setProducts }) => {
   const [Loading, setLoading] = useState(false);
   setTimeout(() => {
     setLoading(true);
@@ -42,62 +42,84 @@ const AllProducts = ({ products,setProducts }) => {
             <div className="w-full grid grid-cols-1 gap-4 justify-items-center items-center md:grid-cols-3 lg:grid-cols-4">
               {products.map((prod, i) => (
                 <div className="" key={i}>
-                  <Card className="  mt-10 border-[1px] border-gray-300 shadow-lg hover:shadow-2xl hover:shadow-black dark:hover:shadow-white transition-shadow duration-300 rounded-lg overflow-hidden ">
-                    <CardHeader color="white" className="relative h-96">
-                      <div className="py-3 ">
-                        <h1 className="bg-gradient-to-r from-green-500 to-green-700 dark:from-blue-gray-700 dark:to-blue-gray-900 w-28 h-14 text-center pt-3 text-white rounded-lg font-bold shadow-md">
-                          {prod.category}
-                        </h1>
+             <Card className="mt-10 border border-gray-300 dark:border-blue-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden bg-white dark:bg-blue-gray-900">
 
-                        {prod.images.slice(-1).map((im, it) => (
-                          <img
-                            alt="card-image"
-                            src={im}
-                            key={it}
-                            className="w-full h-56 object-cover rounded-lg mt-3 transition-transform duration-300 hover:scale-105 "
-                          />
-                        ))}
-                      </div>
-                    </CardHeader>
+  {/* HEADER */}
+  <CardHeader className="h-96 bg-transparent dark:bg-transparent">
 
-                    <CardBody className="bg-gray-50 dark:bg-blue-gray-800 p-5">
-                      <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="mb-2 font-bold text-center dark:text-white"
-                      >
-                        Brand:{" "}
-                        <span className="text-green-600 font-medium">
-                          {prod.brand
-                            ? prod.brand
-                            : prod.tags
-                              ? prod.tags.map((im) => im).join(", ")
-                              : "UNKNOWN"}
-                        </span>
-                      </Typography>
-                      <hr className="my-2 border-t-2 border-gray-300" />
-                      <Typography className="text-gray-700 text-center dark:text-gray-300 text-lg font-semibold">
-                        {prod.title}
-                      </Typography>
-                      <Typography className="text-black text-center font-bold mt-3 dark:text-white">
-                        Price:{" "}
-                        <span className="text-green-600 underline font-medium">
-                          ${prod.price}
-                        </span>
-                      </Typography>
-                    </CardBody>
+    <div className="py-3">
 
-                    <CardFooter className="pt-4 w-full bg-gray-50 dark:bg-blue-gray-800">
-                      <Link to={`/details/${prod._id}`}>
-                        <Button
-                          className="capitalize w-full flex justify-center items-center hover:shadow-lg font-bold text-sm border-[1px] border-gray-300 rounded-lg px-4 py-2 bg-gradient-to-r from-green-700 to-yellow-700 text-white hover:from-green-800 hover:to-yellow-800 dark:from-gray-800 dark:to-gray-900 dark:hover:from-gray-900 dark:hover:to-gray-800 transition-all duration-300"
-                          variant="filled"
-                        >
-                          Show Details
-                        </Button>
-                      </Link>
-                    </CardFooter>
-                  </Card>
+      <h1 className="w-28 h-14 text-center pt-3 rounded-lg font-bold shadow-md
+        bg-gradient-to-r from-green-500 to-green-700
+        dark:from-blue-gray-700 dark:to-blue-gray-800
+        text-white"
+      >
+        {prod.category}
+      </h1>
+
+      {prod.images.slice(-1).map((im, it) => (
+        <img
+          key={it}
+          src={im}
+          className="w-full h-56 object-cover rounded-lg mt-3 transition-transform duration-300 hover:scale-105"
+        />
+      ))}
+
+    </div>
+
+  </CardHeader>
+
+  {/* BODY (same bg as card) */}
+  <CardBody className="bg-transparent dark:bg-transparent p-5">
+
+    <Typography
+      variant="h5"
+      className="mb-2 font-bold text-center text-blue-gray-800 dark:text-white"
+    >
+      Brand:{" "}
+      <span className="text-green-600 dark:text-blue-gray-300 font-medium">
+        {prod.brand
+          ? prod.brand
+          : prod.tags
+            ? prod.tags.map((im) => im).join(", ")
+            : "UNKNOWN"}
+      </span>
+    </Typography>
+
+    <hr className="my-2 border-t border-gray-300 dark:border-blue-gray-700" />
+
+    <Typography className="text-gray-700 dark:text-blue-gray-200 text-center text-lg font-semibold">
+      {prod.title}
+    </Typography>
+
+    <Typography className="text-black dark:text-white text-center font-bold mt-3">
+      Price:{" "}
+      <span className="text-green-600 dark:text-blue-gray-300 font-medium">
+        ${prod.price}
+      </span>
+    </Typography>
+
+  </CardBody>
+
+  {/* FOOTER (same bg as card) */}
+  <CardFooter className="bg-transparent dark:bg-transparent pt-4 w-full">
+
+    <Link to={`/details/${prod._id}`}>
+      <Button
+        className="w-full flex justify-center items-center font-bold text-sm rounded-lg px-4 py-2
+        bg-gradient-to-r from-green-700 to-yellow-700
+        hover:from-green-800 hover:to-yellow-800
+        dark:from-blue-gray-700 dark:to-blue-gray-800
+        dark:hover:from-blue-gray-800 dark:hover:to-blue-gray-900
+        text-white transition-all duration-300"
+      >
+        Show Details
+      </Button>
+    </Link>
+
+  </CardFooter>
+
+</Card>
                 </div>
               ))}
             </div>

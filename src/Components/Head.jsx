@@ -14,60 +14,84 @@ import { Link, useNavigate } from "react-router-dom";
 import { CiShoppingCart, CiSun } from "react-icons/ci";
 import { FaRegMoon } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
+import api from "../Api/api";
 const Head = ({
   openDrawer,
-
   setCheckSearch,
   checkSearch,
-
   categoriesNameSideBar,
 }) => {
+  /////////////// states ///////////////
   const [openNav, setOpenNav] = useState(false);
   const [darkLight, setDarkLight] = useState(false);
   const [userName, setUserName] = useState("");
+  const [cart, setCart] = useState([]);
+  const [cartQuantity, setCartQuantity] = useState(1);
+  ////////////// variables //////////////
+  const token = JSON.parse(localStorage.getItem("accessToken"));
+  const counter = JSON.parse(localStorage.getItem("counter"));
+  const decoded = token ? jwtDecode(token) : null;
+  const navigate = useNavigate();
+  ////////////// functions //////////////
+  // close nav when window resize
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
-
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
+  // get user name from local storage
   useEffect(() => {
     setUserName(JSON.parse(localStorage.getItem("userName")));
   }, [JSON.parse(localStorage.getItem("userName"))]);
+  // dark theme
   function setDarkTheme() {
     document.documentElement.classList.add("dark");
     localStorage.theme = "dark";
     setDarkLight(!darkLight);
   }
-
+  // light theme
   function setLightTheme() {
     document.documentElement.classList.remove("dark");
     localStorage.theme = "light";
     setDarkLight(!darkLight);
   }
+  // search function
 
-  const navigate = useNavigate();
   const searchProd = () => {
     navigate("/search");
   };
 
-  const token = JSON.parse(localStorage.getItem("accessToken"));
-  const counterr = JSON.parse(localStorage.getItem("counter"));
-  const decoded = token ? jwtDecode(token) : null;
+  const getCart = () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken"));
+      const res = api.get(`https://e-commerce-nodejs-blush.vercel.app/cart`, {
+        headers: {
+          authorization: token
+        }
+      }).then((res) => setCart(res.data.data));
+      // setCart(res.data.data);
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
 
-
+  // useEffect(() => {
+  //   getCart();
+  // }, [JSON.parse(localStorage.getItem("counter"))]);
+  // console.log("cart in head", cart);
   return (
-  
-      <Navbar
+
+    <Navbar
       variant="gradient"
       color="blue-gray"
       className="sticky top-0 z-20 mx-auto max-w-screen-xl  from-green-900 to-green-800 dark:from-blue-gray-900 dark:to-blue-gray-800 px-4"
     >
-      
+
       <div className="flex h-full w-full items-center justify-between text-white">
         <div className="flex items-center gap-1">
           <Button
@@ -132,8 +156,8 @@ const Head = ({
             {/* Cart */}
             <div className="relative group">
               <Badge
-                content={counterr ? counterr : 0}
-                className={counterr >= 1 ? "bg-green-900" : "bg-red-900"}
+                content={cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0}
+                className={counter >= 1 ? "bg-green-900" : "bg-red-900"}
               >
                 <Link to="/adding">
                   <CiShoppingCart className="text-4xl text-white hover:text-green-300 hover:dark:text-[#9b9ca5]" />
@@ -152,7 +176,7 @@ const Head = ({
             {/* Register  */}
             {userName ? (
               <div className="flex items-center gap-3">
-                <h1 className="text-blue-500 dark:text-blue-gray-300 ps-1">
+                <h1 className="text-gray-300 dark:text-blue-gray-300 ps-1">
                   {userName}
                 </h1>
 
@@ -166,7 +190,7 @@ const Head = ({
                     />
                   </button>
 
-                  <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 overflow-y-auto">
+                  <div className="absolute right-0 top-full mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg overflow-y-auto h-auto max-h-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                     <Link
                       to="/profile"
                       className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
@@ -195,25 +219,33 @@ const Head = ({
                           admin Dashboard
                         </Link>
 
-                        <button
-                          onClick={() => {
-                            localStorage.removeItem("accessToken");
-                            localStorage.removeItem("userName");
-                            window.location.href = "/login";
-                          }}
-                          className="block px-4 py-2 w-full text-left rounded-b-lg text-red-600 hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                        <Link
+                          to="/reviewsManagement"
+                          className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
                         >
-                          Logout
-                        </button>
+                          Reviews Management
+                        </Link>
                       </div>
-                    ):null}
+                    ) : null}
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem("accessToken");
+                        localStorage.removeItem("userName");
+                        localStorage.removeItem("counter");
+
+                        window.location.href = "/login";
+                      }}
+                      className="block px-4 py-2 w-full text-left rounded-b-lg text-red-600 hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                    >
+                      Logout
+                    </button>
                   </div>
                 </div>
               </div>
             ) : (
               <Link
                 to="/login"
-                className="ps-1 text-red-300 hover:text-green-300 font-medium"
+                className="ps-1 text-white font-weight hover:text-green-100 font-medium"
               >
                 Login
               </Link>
@@ -259,16 +291,16 @@ const Head = ({
                     {userName}
                   </h1>
 
-                  <div className="relative group">
+                  <div className="relative  group">
                     <button className="flex items-center focus:outline-none">
                       <img
                         src="https://ui-avatars.com/api/?name=User&background=10b981&color=fff&rounded=true"
                         alt="profile"
-                        className="w-9 h-9 rounded-full ring-2 ring-green-400  object-cover"
+                        className="w-9  rounded-full ring-2 ring-green-400  object-cover"
                       />
                     </button>
 
-                    <div className="absolute right-0 mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 overflow-y-auto h-auto max-h-48">
+                    <div className="absolute right-0 top-full mt-2 w-36 bg-white dark:bg-blue-gray-800 rounded-lg shadow-lg overflow-y-auto h-auto max-h-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                       <Link
                         to="/profile"
                         className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
@@ -296,12 +328,20 @@ const Head = ({
                           >
                             admin Dashboard
                           </Link>
+
+                          <Link
+                            to="/reviewsManagement"
+                            className="block px-4 py-2 rounded-t-lg text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
+                          >
+                            Reviews Management
+                          </Link>
                         </div>
-                      ):null}
+                      ) : null}
                       <button
                         onClick={() => {
                           localStorage.removeItem("accessToken");
                           localStorage.removeItem("userName");
+                          localStorage.removeItem("counter");
                           window.location.href = "/login";
                         }}
                         className="block px-4 pb-6 py-2 w-full text-left rounded-b-lg text-red-600 hover:bg-gray-200 dark:hover:bg-blue-gray-700 transition"
@@ -310,11 +350,13 @@ const Head = ({
                       </button>
                     </div>
                   </div>
+
+
                 </div>
               ) : (
                 <Link
                   to="/login"
-                  className="mt-2 inline-block px-2 py-1 text-sm rounded-md bg-white/5 text-red-200 hover:text-green-300 font-medium"
+                  className="mt-2 inline-block px-2 py-1 text-sm rounded-md bg-white/5 text-white font-bold hover:text-green-300 font-medium"
                 >
                   Login
                 </Link>
@@ -384,8 +426,8 @@ const Head = ({
                   className="font-medium text-white cursor-pointer hover:dark:text-[#9b9ca5]"
                 >
                   <Badge
-                    content={counterr ? counterr : 0}
-                    className={counterr >= 1 ? "bg-green-900" : "bg-red-900"}
+                    content={cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0}
+                    className={counter >= 1 ? "bg-green-900" : "bg-red-900"}
                   >
                     <Link to="/adding">
                       <CiShoppingCart className="text-3xl text-white hover:text-green-300" />
@@ -398,8 +440,8 @@ const Head = ({
         </div>
       </Collapse>
     </Navbar>
- 
- 
+
+
   );
 };
 

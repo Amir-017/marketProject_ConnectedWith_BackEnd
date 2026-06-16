@@ -68,18 +68,18 @@ const SearchProducts = ({ checkSearch }) => {
 
   //   },[])
   return (
-    <div className="w-full  ">
+    <div className="w-full   ">
       {Loading ? (
-        <div className="w-full dark:bg-blue-gray-900 bg-[#EAEAEA]">
+        <div className="w-full dark:bg-blue-gray-900 bg-[#EAEAEA] min-h-screen">
           <div className="container mx-auto">
             <div className="w-full h-40 pt-[2em]">
               <div className="w-full dark:bg-blue-gray-800 bg-[#EAEAEA]  h-20  rounded-xl flex flex-col md:flex-row shadow-lg mb-20  justify-between  ">
                 <div className="flex ">
                   <div className="w-1 h-20 bg-green-500 rounded"></div>
                   <h1 className="text-gray-700 dark:text-white text-2xl ms-3  font-bold h-20 flex items-center">
-                    Your Result Based On : {"  "}
+                    Search Products : {"  "}
                     <span className="ms-2 text-green-900 dark:text-green-300 font-bold">
-                      {checkSearch}
+                      {search.products && search.products.length > 0 ? search.products.length : "No Products found"}
                     </span>
                   </h1>
                 </div>
@@ -108,17 +108,11 @@ const SearchProducts = ({ checkSearch }) => {
                 </div>
               </div>
             </div>
-            <div className="w-full text-black my-10 text-xl font-bold dark:text-white">
-              Product Quantity :{" "}
-              <span className="text-green-900 dark:text-green-300 ">
-                {search && search.products?.length}
-              </span>
-              <hr className="border-t-2 border-gray-500" />
-            </div>
-            <div className="w-full grid grid-cols-1 gap-4 justify-items-center items-center md:grid-cols-3 lg:grid-cols-4 pb-10">
+
+            <div className="">
               {search.products.length > 0 ? (
                 search.products.map((prod, i) => (
-                  <div className="" key={i}>
+                  <div className="w-full grid grid-cols-1 gap-4 justify-items-center items-center md:grid-cols-3 lg:grid-cols-4 pb-10" key={i}>
                     <Card className="  mt-10 border-[1px] border-gray-300 shadow-lg hover:shadow-2xl hover:shadow-black dark:hover:shadow-white transition-shadow duration-300 rounded-lg overflow-hidden ">
                       <CardHeader color="white" className="relative h-96">
                         <div className="py-3 ">
@@ -181,7 +175,27 @@ const SearchProducts = ({ checkSearch }) => {
 
                 ))
               ) : (
-                <div className="w-full h-[31vh]"></div>
+                <div className="w-full  flex justify-center items-center  px-4">
+                  <div className="max-w-xl w-full rounded-3xl bg-white dark:bg-blue-gray-900 shadow-2xl border border-gray-200 dark:border-blue-gray-700 p-10 text-center">
+                    <div className="text-6xl mb-4">🔍</div>
+
+                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-3">
+                      No Products Found
+                    </h2>
+
+                    <p className="text-gray-600 dark:text-gray-400 text-lg">
+                      We couldn't find any products matching
+                    </p>
+
+                    <div className="mt-4 inline-block px-5 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-semibold break-all">
+                      "{checkSearch}"
+                    </div>
+
+                    <p className="mt-6 text-sm text-gray-500 dark:text-gray-500">
+                      Try searching with a different keyword or check the spelling.
+                    </p>
+                  </div>
+                </div>
               )}
 
             </div>
@@ -225,7 +239,7 @@ const SearchProducts = ({ checkSearch }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-[80vh] dark:bg-blue-gray-900 bg-[#EAEAEA] flex justify-center items-center ">
+        <div className="w-full  dark:bg-blue-gray-900 bg-[#EAEAEA] flex justify-center items-center ">
           <div className="loader"></div>
         </div>
       )}
