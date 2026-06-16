@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import add from "../../imges/shopping_cart-b0846037.png";
+import emptyCart from "../../imges/shopping_cart-b0846037.png";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { FaRegTrashCan } from "react-icons/fa6";
@@ -37,7 +37,7 @@ const AddToCart = ({ }) => {
    *           NAVIGATION
    ************************************/
 
-  const go = () => {
+  const goToHome = () => {
     navigate("/");
   };
 
@@ -243,12 +243,12 @@ const AddToCart = ({ }) => {
       {cart && cart.length == 0 ? (
         <div className=" w-full h-screen flex justify-center items-center ">
           <div className="  flex flex-col justify-center items-center  gap-y-3">
-            <img src={add} alt="" className=" w-[200px] h-[200px] " />
+            <img src={emptyCart} alt="" className=" w-[200px] h-[200px] " />
             <h2 className="text-gray-600 capitalize dark:text-gray-300">
               your shopping cart is empty
             </h2>
             <button
-              onClick={go}
+              onClick={goToHome}
               className=" font-bold capitalize rounded-md bg-green-700 dark:bg-[#282d45] py-3 px-10 text-white shadow-md hover:shadow-lg hover:bg-green-800 dark:hover:bg-[#1f243b] transition-all"
               type="button"
             >

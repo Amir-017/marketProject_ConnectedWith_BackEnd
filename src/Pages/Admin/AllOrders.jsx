@@ -4,10 +4,11 @@ import api from "../../Api/api";
 
 export function AllOrders() {
     const [orders, setOrders] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchOrders = async () => {
             try {
+                setLoading(true);
                 const token = JSON.parse(localStorage.getItem("accessToken"));
                 const res = await api.get("https://e-commerce-nodejs-blush.vercel.app/orders", {
                     headers: {
@@ -18,6 +19,8 @@ export function AllOrders() {
                 setOrders(res.data);
             } catch (err) {
                 console.log(err);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -26,8 +29,9 @@ export function AllOrders() {
     console.log(orders);
     return (
         <div className="min-h-screen px-4 py-10 bg-gray-100 dark:bg-blue-gray-900">
-
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+           {loading ? <div className="w-full h-screen flex items-center justify-center">
+            <div className="loader"></div>
+           </div> : <div>   <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 🛒 Admin Orders Dashboard
             </h1>
 
@@ -164,7 +168,8 @@ export function AllOrders() {
 
                     </div>
                 </div>
-            </div>
+            </div></div>}
+         
         </div>
     );
 }

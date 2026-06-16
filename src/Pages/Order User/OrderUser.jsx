@@ -105,6 +105,8 @@ export const OrderUser = () => {
                     },
                 }
             );
+             // to make header know that cart is updated and update the counter in header
+             window.dispatchEvent(new Event("cartUpdated"));
         } catch (err) {
             console.log(err);
         } finally {
@@ -117,14 +119,15 @@ export const OrderUser = () => {
     ========================= */
     return (
         <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-white px-6 py-10">
+            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
                 {/* ================= CART ================= */}
                 <div>
                     <h2 className="text-2xl font-bold mb-6">Your Cart</h2>
 
-                    {loadingCart ? (
-                        <div className="text-gray-400">Loading cart...</div>
+                    {!loadingCart ? (
+                        <div className="loader"></div>
                     ) : cart.length === 0 ? (
                         <div className="rounded-2xl border border-white/10 p-10 text-center text-gray-400">
                             Your cart is empty 🛒

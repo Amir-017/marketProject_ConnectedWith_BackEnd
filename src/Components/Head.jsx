@@ -164,11 +164,11 @@ const Head = ({
                 ) : null,
               )}
             </ul>
-
+  
             {/* Cart */}
             <div className="relative group">
               <Badge
-                content={cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0}
+                content={userName ? cart?.reduce((total, item) => total + item.quantity, 0) : 0}
                 className={cart && cart.length > 0 ? "bg-green-900" : "bg-red-900"}
               >
                 <Link to="/adding">
@@ -451,7 +451,7 @@ const Head = ({
                   className="font-medium text-white cursor-pointer hover:dark:text-[#9b9ca5]"
                 >
                   <Badge
-                    content={cart ? cart.reduce((total, item) => total + item.quantity, 0) : 0}
+                    content={userName ? cart?.reduce((total, item) => total + item.quantity, 0) : 0}
                     className={cart && cart.length > 0 ? "bg-green-900" : "bg-red-900"}
                   >
                     <Link to="/adding">

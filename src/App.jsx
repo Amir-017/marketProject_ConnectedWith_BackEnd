@@ -136,14 +136,15 @@ const App = () => {
   // ==========================
   // ==========================
   const openDrawer = () => {
-    setCheck(true);
     setOpen(true);
   };
 
   const closeDrawer = () => {
-    setCheck(false);
     setOpen(false);
   };
+  useEffect(() => {
+    setOpen(false)
+  }, [location.pathname]);
   // ==========================
   // check if user in login or resigster page to hide header and footer
   const hideHeaderFooter = location.pathname === "/login" || location.pathname === "/register";
@@ -173,7 +174,7 @@ const App = () => {
       </div>
 
 
-      <div className={`${check ? "blur-sm" : ""}`}>
+      <div className={`${open ? "blur-sm" : ""}`}>
 
         {/* ==========================
              Header
