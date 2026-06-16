@@ -109,9 +109,8 @@ export const OrderUser = () => {
              window.dispatchEvent(new Event("cartUpdated"));
         } catch (err) {
             console.log(err);
-        } finally {
-            setSubmitting(false);
-        }
+        } 
+    
     };
 
     /* =========================
