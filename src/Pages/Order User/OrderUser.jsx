@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import api from "../Api/api";
+import api from "../../Api/api";
 
 /* =========================
    ZOD SCHEMA
@@ -43,7 +43,7 @@ export const OrderUser = () => {
         try {
             const token = JSON.parse(localStorage.getItem("accessToken"));
             setLoadingCart(true);
-            const res = await axios.get("http://localhost:3000/cart", {
+            const res = await api.get("e-commerce-nodejs-blush.vercel.app/cart", {
                 headers: {
                     authorization: token,
                 },
@@ -73,7 +73,7 @@ export const OrderUser = () => {
             setSubmitting(true);
 
             const token = JSON.parse(localStorage.getItem("accessToken"));
-            await axios.post("http://localhost:3000/orders", data, {
+            await api.post("e-commerce-nodejs-blush.vercel.app/orders", data, {
                 headers: {
                     authorization: token,
                 },
@@ -98,7 +98,7 @@ export const OrderUser = () => {
             // clear cart after order placement by make an call to server to clear cart
             setCart([]);
             const res = await api.delete(
-                `http://localhost:3000/cart`,
+                `e-commerce-nodejs-blush.vercel.app/cart`,
                 {
                     headers: {
                         authorization: token,
@@ -208,9 +208,12 @@ export const OrderUser = () => {
                     dark:border-white/10 dark:bg-white/5
                     p-6 backdrop-blur-xl
                     shadow-sm hover:shadow-md transition-all duration-300">
-                    <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
+                    <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">
                         Shipping Details
                     </h2>
+                    <span className="text-sm text-gray-600 dark:text-gray-400 mb-4 block">
+                        Feel free to update your shipping information at any time.
+                        </span>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 

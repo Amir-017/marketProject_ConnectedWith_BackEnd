@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Route, Routes,useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import axios from "axios";
 
 // ==========================
@@ -67,10 +67,10 @@ import Head from "./Components/Head";
 import { Drawer, IconButton } from "@material-tailwind/react";
 import api from "./Api/api";
 import ProtectedRoute from "./protectRoutes/ProtectRoutes";
-import { AllReviews } from "./Pages/DetailsItem/ReviewsProducts/AllReviews";
-import AddReview  from "./Pages/DetailsItem/ReviewsProducts/AddReview";
+import { AllReviews } from "./Pages/ReviewsProducts/AllReviews";
+import AddReview from "./Pages/ReviewsProducts/AddReview";
 import { ReviewsManagements } from "./Pages/Admin/ReviewsManagements";
-import { OrderUser } from "./Order User/OrderUser";
+import { OrderUser } from "./Pages/Order User/OrderUser";
 import { AllOrders } from "./Pages/Admin/AllOrders";
 const App = () => {
   // ==========================
@@ -144,7 +144,7 @@ const App = () => {
     setCheck(false);
     setOpen(false);
   };
- // ==========================
+  // ==========================
   // check if user in login or resigster page to hide header and footer
   const hideHeaderFooter = location.pathname === "/login" || location.pathname === "/register";
   // ==========================
@@ -196,17 +196,36 @@ const App = () => {
           <Route path="/" element={<AllProducts products={products} setProducts={setProducts} />} />
           {/* Details & Reviews */}
           <Route path="/details/:id" element={<DetailsItem aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
-          <Route path="/reviews/:id" element={<AllReviews />} />
-          <Route path="/addReview/:id" element={<AddReview />} />
+
           {/* Auth */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
           {/* Protected Routes */}
-          {/* <Route element={<ProtectedRoute />} /> */}
+          <Route element={<ProtectedRoute />} >
+            <Route path="/reviews/:id" element={<AllReviews />} />
+            <Route path="/addReview/:id" element={<AddReview />} />
+               {/* Cart */}
+          <Route path="/adding" element={<AddToCart aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
+          {/* Order */}
+          <Route path="/order" element={<OrderUser />} />
+
+           {/* Profile */}
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/editeProfile" element={<EditeProfile />} />
+          <Route path="/Changepassword" element={<ChangePassword />} />
+
+          {/* Admin */}
+          <Route path="/allUsers" element={<AllUsers />} />
+          <Route path="/allCarts" element={<AllCarts />} />
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
+          <Route path="/adminDashboard/addProduct" element={<AddProduct />} />
+          <Route path="/adminDashboard/updateProduct/:id" element={<UpdateProduct />} />
+          <Route path="/reviewsManagement" element={<ReviewsManagements />} />
+          <Route path="/allOrders" element={<AllOrders />} />
+          </Route>
 
           {/* Categories */}
-          <Route path="/beauty" element={<Beatuy Loading={loading} />} />
           <Route path="/fragrances" element={<Fragrances Loading={loading} />} />
           <Route path="/furniture" element={<Furniture Loading={loading} />} />
           <Route path="/groceries" element={<Groceries Loading={loading} />} />
@@ -233,29 +252,14 @@ const App = () => {
 
 
 
-          {/* Cart */}
-          <Route path="/adding" element={<AddToCart aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
-          {/* Order */}
-          <Route path="/order" element={<OrderUser />} />
-          
+       
+
           {/* Search */}
           <Route path="/search" element={<SearchProducts checkSearch={checkSearch} Loading={loading} />} />
 
 
 
-          {/* Profile */}
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/editeProfile" element={<EditeProfile />} />
-          <Route path="/Changepassword" element={<ChangePassword />} />
-
-          {/* Admin */}
-          <Route path="/allUsers" element={<AllUsers />} />
-          <Route path="/allCarts" element={<AllCarts />} />
-          <Route path="/adminDashboard" element={<AdminDashboard />} />
-          <Route path="/adminDashboard/addProduct" element={<AddProduct />} />
-          <Route path="/adminDashboard/updateProduct/:id" element={<UpdateProduct />} />
-          <Route path="/reviewsManagement" element={<ReviewsManagements />} />
-          <Route path="/allOrders" element={<AllOrders />} />
+         
         </Routes>
 
         {/* ==========================

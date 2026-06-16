@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import api from "../../../Api/api";
+import api from "../../Api/api";
 import axios from "axios";
 // api.get(`https://e-commerce-nodejs-blush.vercel.app/reviews/${productId}`, {
 
@@ -20,7 +20,7 @@ export const AllReviews = () => {
     /// Get Reviews for specific product
     const getReviews = () => {
         const token = JSON.parse(localStorage.getItem("accessToken"));
-        axios.get(`http://localhost:3000/reviewProducts/${id}`, {
+        api.get(`http://localhost:3000/reviewProducts/${id}`, {
             headers: {
                 authorization: token
             }
@@ -34,7 +34,7 @@ export const AllReviews = () => {
             url: `https://e-commerce-nodejs-blush.vercel.app/products/${id}`,
         }).then((data) => setDetailsProduct(data.data.data));
     };
- 
+
     ////////////////////// Effects ///////////////////////
     useEffect(() => {
         getReviews();
@@ -45,7 +45,7 @@ export const AllReviews = () => {
         setLoading(true);
     }, 1300);
 
-   //////////////////////// Function that delete review and set loading when delete review for better UI ///////////////////////
+    //////////////////////// Function that delete review and set loading when delete review for better UI ///////////////////////
     const deleteReview = async (reviewId) => {
         // Check if the review to be deleted is still in the reviews state before setting deleteLoading to true
         const checkdeletedReview = reviews?.reviews?.find((review) => review._id === reviewId)
@@ -53,13 +53,13 @@ export const AllReviews = () => {
 
         try {
             const token = JSON.parse(localStorage.getItem("accessToken"));
-            await axios.delete(`http://localhost:3000/reviewProducts/${detailsProduct._id}/${reviewId}`, {
+            await api.delete(`http://localhost:3000/reviewProducts/${detailsProduct._id}/${reviewId}`, {
                 headers: {
                     authorization: token
                 }
             });
             getReviews();
-            
+
         } catch (error) {
             console.error("Error deleting review:", error);
         }
@@ -260,7 +260,7 @@ export const AllReviews = () => {
             </div> : <div className="flex justify-center items-center h-screen">
                 <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
             </div>}
-            
+
 
 
         </div>

@@ -23,20 +23,16 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-/**
- * Handle responses globally
- * ❌ NO REDIRECT HERE (important)
- */
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error.response?.status;
 
-    // لو التوكن انتهى فعلاً
+    
     if (status === 401) {
       localStorage.removeItem("accessToken");
 
-      // بس هنعمل event بدل redirect
+      
       window.dispatchEvent(new Event("auth:failed"));
     }
 

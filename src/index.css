@@ -12,50 +12,60 @@ html {
 
 .loader {
   width: 96px;
-  box-sizing: content-box;
   height: 48px;
-  background: #fff;
-  border-color: #de3500;
-  border-style: solid;
-  border-width: 2px 2px 50px 2px;
+  box-sizing: content-box;
+  border: 2px solid #22c55e; /* green-500 */
+  border-bottom: 50px solid #22c55e;
   border-radius: 100%;
   position: relative;
-  animation: 3s yinYang linear infinite;
+  animation: 2.5s spinLoader linear infinite;
 }
-.loader:before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  background: #fff;
-  border: 18px solid #de3500;
-  border-radius: 100%;
-  width: 12px;
-  height: 12px;
-  box-sizing: content-box;
-}
+
+/* inner circles */
+.loader:before,
 .loader:after {
   content: "";
   position: absolute;
   top: 50%;
-  left: 50%;
-  background: #de3500;
-  border: 18px solid #fff;
-  border-radius: 100%;
   width: 12px;
   height: 12px;
+  border-radius: 50%;
   box-sizing: content-box;
 }
-@keyframes yinYang {
+
+/* top dot */
+.loader:before {
+  left: 0;
+  background: #22c55e;
+  border: 18px solid #ffffff;
+}
+
+/* bottom dot */
+.loader:after {
+  left: 50%;
+  background: #ffffff;
+  border: 18px solid #22c55e;
+}
+
+/* animation */
+@keyframes spinLoader {
   100% {
     transform: rotate(360deg);
   }
 }
 
-.navbar {
-  background-color: green !important;
+.dark .loader {
+  border-color: #334155; /* slate-700 */
+  border-bottom-color: #0ea5e9; /* cyan-500 accent */
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.25);
 }
 
-.removeShadowBlack .absolute {
-  background-color: transparent !important;
+.dark .loader:before {
+  background: #0f172a; /* deep blue-gray */
+  border: 18px solid #334155;
+}
+
+.dark .loader:after {
+  background: #334155;
+  border: 18px solid #0ea5e9;
 }

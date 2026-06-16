@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../Api/api";
 
 export function AllOrders() {
     const [orders, setOrders] = useState([]);
@@ -8,7 +9,7 @@ export function AllOrders() {
         const fetchOrders = async () => {
             try {
                 const token = JSON.parse(localStorage.getItem("accessToken"));
-                const res = await axios.get("http://localhost:3000/orders", {
+                const res = await api.get("e-commerce-nodejs-blush.vercel.app/orders", {
                     headers: {
                         authorization: token,
                     },

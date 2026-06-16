@@ -53,9 +53,7 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
   const addToCart = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken"));
     let counter = JSON.parse(localStorage.getItem("counter"));
-    // localStorage.setItem('counter', JSON.stringify(newCount));
-
-    const newCount = counter + 1;
+  
 
     try {
       if (userInfo && userInfo.role === "admin") {
@@ -67,9 +65,6 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
         });
         return;
       }
-
-
-    
 
       await Swal.fire({
         icon: "success",

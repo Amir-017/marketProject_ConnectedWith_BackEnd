@@ -321,7 +321,7 @@ const AddToCart = ({ }) => {
                                 <button
                                   onClick={() => decress(item)}
                                   disabled={item.quantity <= 1}
-                                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-[#2a2f4a] dark:hover:bg-[#343b5c] text-white transition disabled:opacity-40"
+                                  className="px-4 py-2 bg-gray-700 hover:bg-gray-200 dark:bg-[#2a2f4a] dark:hover:bg-[#343b5c] text-white transition"
                                 >
                                   -
                                 </button>
@@ -332,7 +332,7 @@ const AddToCart = ({ }) => {
 
                                 <button
                                   onClick={() => incress(item)}
-                                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-[#2a2f4a] dark:hover:bg-[#343b5c] text-white transition"
+                                  className="px-4 py-2 bg-gray-700 hover:bg-gray-200 dark:bg-[#2a2f4a] dark:hover:bg-[#343b5c] text-white transition"
                                 >
                                   +
                                 </button>
@@ -393,7 +393,7 @@ const AddToCart = ({ }) => {
           {cart.length || 0} Items
         </h2>
 
-        <p className="mt-2 text-base sm:text-lg font-bold text-emerald-600 dark:text-emerald-400">
+        <p className="mt-2 text-base sm:text-lg font-bold text-emerald-600 dark:text-gray-400">
           {cart && cart.length > 0
             ? cart
                 .reduce(
