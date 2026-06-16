@@ -53,7 +53,7 @@ export default function AddReview() {
         const token = JSON.parse(localStorage.getItem("accessToken"));
         try {
             await api.post(
-                `e-commerce-nodejs-blush.vercel.app/reviewProducts/${id}`,
+                `https://e-commerce-nodejs-blush.vercel.app/reviewProducts/${id}`,
                 values, {
                 headers: {
                     authorization: token

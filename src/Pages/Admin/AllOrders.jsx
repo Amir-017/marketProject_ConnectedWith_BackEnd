@@ -9,7 +9,7 @@ export function AllOrders() {
         const fetchOrders = async () => {
             try {
                 const token = JSON.parse(localStorage.getItem("accessToken"));
-                const res = await api.get("e-commerce-nodejs-blush.vercel.app/orders", {
+                const res = await api.get("https://e-commerce-nodejs-blush.vercel.app/orders", {
                     headers: {
                         authorization: token,
                     },

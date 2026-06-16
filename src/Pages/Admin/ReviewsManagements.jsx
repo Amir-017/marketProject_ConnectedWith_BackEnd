@@ -17,7 +17,7 @@ export const ReviewsManagements = () => {
         const token = JSON.parse(localStorage.getItem("accessToken"));
         try {
             const { data } = await api.get(
-                "e-commerce-nodejs-blush.vercel.app/reviewProducts", {
+                "https://e-commerce-nodejs-blush.vercel.app/reviewProducts", {
                 headers: {
                     authorization: `${token}`
                 }
@@ -39,7 +39,7 @@ export const ReviewsManagements = () => {
 
         try {
             const token = JSON.parse(localStorage.getItem("accessToken"));
-            await api.delete(`e-commerce-nodejs-blush.vercel.app/reviewProducts/${productId}/${reviewId}`, {
+            await api.delete(`https://e-commerce-nodejs-blush.vercel.app/reviewProducts/${productId}/${reviewId}`, {
                 headers: {
                     authorization: token
                 }

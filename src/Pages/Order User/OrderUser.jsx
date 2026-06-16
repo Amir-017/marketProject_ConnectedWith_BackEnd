@@ -43,7 +43,7 @@ export const OrderUser = () => {
         try {
             const token = JSON.parse(localStorage.getItem("accessToken"));
             setLoadingCart(true);
-            const res = await api.get("e-commerce-nodejs-blush.vercel.app/cart", {
+            const res = await api.get("https://e-commerce-nodejs-blush.vercel.app/cart", {
                 headers: {
                     authorization: token,
                 },
@@ -73,7 +73,7 @@ export const OrderUser = () => {
             setSubmitting(true);
 
             const token = JSON.parse(localStorage.getItem("accessToken"));
-            await api.post("e-commerce-nodejs-blush.vercel.app/orders", data, {
+            await api.post("https://e-commerce-nodejs-blush.vercel.app/orders", data, {
                 headers: {
                     authorization: token,
                 },
@@ -98,7 +98,7 @@ export const OrderUser = () => {
             // clear cart after order placement by make an call to server to clear cart
             setCart([]);
             const res = await api.delete(
-                `e-commerce-nodejs-blush.vercel.app/cart`,
+                `https://e-commerce-nodejs-blush.vercel.app/cart`,
                 {
                     headers: {
                         authorization: token,
