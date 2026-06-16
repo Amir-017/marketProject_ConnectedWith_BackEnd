@@ -22,7 +22,7 @@ const orderSchema = z.object({
 
 export const OrderUser = () => {
     const [cart, setCart] = useState([]);
-    const [loadingCart, setLoadingCart] = useState(true);
+    const [loadingCart, setLoadingCart] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const navigate = useNavigate();
     /* =========================
@@ -127,7 +127,7 @@ export const OrderUser = () => {
                     <h2 className="text-2xl font-bold mb-6">Your Cart</h2>
 
                     {!loadingCart ? (
-                        <div className="loader"></div>
+                        <div className="loader w-full flex justify-center items-center"></div>
                     ) : cart.length === 0 ? (
                         <div className="rounded-2xl border border-white/10 p-10 text-center text-gray-400">
                             Your cart is empty 🛒
