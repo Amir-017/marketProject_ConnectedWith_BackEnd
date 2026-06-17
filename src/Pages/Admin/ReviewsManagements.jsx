@@ -242,7 +242,7 @@ export const ReviewsManagements = () => {
                     {/* if reviews not found */}
 
                     {allReviews.every(item => item.reviews.length === 0) && (
-                        <div className="flex min-h-[400px] items-center justify-center rounded-3xl border border-gray-800 bg-[#0f172a] p-10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                        <div className="flex min-h-[400px] items-center justify-center rounded-3xl border border-gray-800 bg-gray-600 dark:bg-[#0f172a] p-10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
                             <div className="text-center">
                                 <div className="mb-6 text-7xl">📝</div>
 
@@ -250,13 +250,13 @@ export const ReviewsManagements = () => {
                                     No Reviews Yet
                                 </h1>
 
-                                <p className="text-lg text-gray-400">
+                                <p className="text-lg text-gray-300 dark:text-gray-400">
                                     Looks like no one has reviewed products yet.
                                 </p>
 
 
 
-                                <div className="mt-8 inline-flex rounded-xl border border-gray-700 bg-gray-900 px-5 py-3 text-sm text-yellow-400">
+                                <div className="mt-8 inline-flex rounded-xl border border-gray-700 bg-gray-900 dark:bg-[#0f172a] px-5 py-3 text-sm text-yellow-400">
                                     ⭐ All Reviews will Appear Here As soon as they are submitted ⭐
                                 </div>
                             </div>

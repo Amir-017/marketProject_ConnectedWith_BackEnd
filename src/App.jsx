@@ -206,27 +206,30 @@ const App = () => {
           <Route element={<ProtectedRoute />} >
             <Route path="/reviews/:id" element={<AllReviews />} />
             <Route path="/addReview/:id" element={<AddReview />} />
-               {/* Cart */}
-          <Route path="/adding" element={<AddToCart aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
-          {/* Order */}
-          <Route path="/order" element={<OrderUser />} />
+            
+            {/* Cart */}
+            <Route path="/adding" element={<AddToCart aboutAdding={aboutAdding} setAboutAdding={setAboutAdding} Loading={loading} />} />
+           
+            {/* Order */}
+            <Route path="/order" element={<OrderUser />} />
 
-           {/* Profile */}
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/editeProfile" element={<EditeProfile />} />
-          <Route path="/Changepassword" element={<ChangePassword />} />
+            {/* Profile */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/editeProfile" element={<EditeProfile />} />
+            <Route path="/Changepassword" element={<ChangePassword />} />
 
-          {/* Admin */}
-          <Route path="/allUsers" element={<AllUsers />} />
-          <Route path="/allCarts" element={<AllCarts />} />
-          <Route path="/adminDashboard" element={<AdminDashboard />} />
-          <Route path="/adminDashboard/addProduct" element={<AddProduct />} />
-          <Route path="/adminDashboard/updateProduct/:id" element={<UpdateProduct />} />
-          <Route path="/reviewsManagement" element={<ReviewsManagements />} />
-          <Route path="/allOrders" element={<AllOrders />} />
+            {/* Admin */}
+            <Route path="/allUsers" element={<AllUsers />} />
+            <Route path="/allCarts" element={<AllCarts />} />
+            <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/adminDashboard/addProduct" element={<AddProduct />} />
+            <Route path="/adminDashboard/updateProduct/:id" element={<UpdateProduct />} />
+            <Route path="/reviewsManagement" element={<ReviewsManagements />} />
+            <Route path="/allOrders" element={<AllOrders />} />
           </Route>
 
           {/* Categories */}
+          <Route path="/beauty" element={<Beatuy Loading={loading} />} />
           <Route path="/fragrances" element={<Fragrances Loading={loading} />} />
           <Route path="/furniture" element={<Furniture Loading={loading} />} />
           <Route path="/groceries" element={<Groceries Loading={loading} />} />
@@ -251,22 +254,13 @@ const App = () => {
           <Route path="/womens-shoes" element={<WomensShoes Loading={loading} />} />
           <Route path="/womens-watches" element={<WomensWatches Loading={loading} />} />
 
-
-
-       
-
           {/* Search */}
           <Route path="/search" element={<SearchProducts checkSearch={checkSearch} Loading={loading} />} />
 
-
-
-         
         </Routes>
-
         {/* ==========================
         ========================== */}
         {!hideHeaderFooter && <Footer />}
-
       </div>
     </div>
   );

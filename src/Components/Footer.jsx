@@ -3,7 +3,7 @@ import { Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <footer className="px-10 dark:bg-blue-gray-800 bg-green-900 flex w-full flex-row  items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between">
+    <footer className="px-10 dark:bg-blue-gray-900 bg-green-900 flex w-full flex-row  items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between">
       <Typography color="blue-gray" className="font-bold text-white">
         &copy; 2026 MARKET
       </Typography>

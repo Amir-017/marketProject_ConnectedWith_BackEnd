@@ -42,84 +42,84 @@ const AllProducts = ({ products, setProducts }) => {
             <div className="w-full grid grid-cols-1 gap-4 justify-items-center items-center md:grid-cols-3 lg:grid-cols-4">
               {products.map((prod, i) => (
                 <div className="" key={i}>
-             <Card className="mt-10 border border-gray-300 dark:border-blue-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden bg-white dark:bg-blue-gray-900">
+                  <Card className="mt-10 border border-gray-300 dark:border-blue-gray-700 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden bg-white dark:bg-blue-gray-900">
 
-  {/* HEADER */}
-  <CardHeader className="h-96 bg-transparent dark:bg-transparent">
+                    {/* HEADER */}
+                    <CardHeader className="h-96 bg-transparent dark:bg-transparent">
 
-    <div className="py-3">
+                      <div className="py-3">
 
-      <h1 className="w-28 h-14 text-center pt-3 rounded-lg font-bold shadow-md
-        bg-gradient-to-r from-green-500 to-green-700
-        dark:from-blue-gray-700 dark:to-blue-gray-800
-        text-white"
-      >
-        {prod.category}
-      </h1>
+                        <h1 className="w-28 h-14 text-center pt-3 rounded-lg font-bold shadow-md
+                        bg-gradient-to-r from-green-500 to-green-700
+                        dark:from-blue-gray-700 dark:to-blue-gray-800
+                        text-white"
+                        >
+                          {prod.category}
+                        </h1>
 
-      {prod.images.slice(-1).map((im, it) => (
-        <img
-          key={it}
-          src={im}
-          className="w-full h-56 object-cover rounded-lg mt-3 transition-transform duration-300 hover:scale-105"
-        />
-      ))}
+                        {prod.images.slice(-1).map((im, it) => (
+                          <img
+                            key={it}
+                            src={im}
+                            className="w-full h-56 object-cover rounded-lg mt-3 transition-transform duration-300 hover:scale-105"
+                          />
+                        ))}
 
-    </div>
+                      </div>
 
-  </CardHeader>
+                    </CardHeader>
 
-  {/* BODY (same bg as card) */}
-  <CardBody className="bg-transparent dark:bg-transparent p-5">
+                    {/* BODY (same bg as card) */}
+                    <CardBody className="bg-transparent dark:bg-transparent p-5">
 
-    <Typography
-      variant="h5"
-      className="mb-2 font-bold text-center text-blue-gray-800 dark:text-white"
-    >
-      Brand:{" "}
-      <span className="text-green-600 dark:text-blue-gray-300 font-medium">
-        {prod.brand
-          ? prod.brand
-          : prod.tags
-            ? prod.tags.map((im) => im).join(", ")
-            : "UNKNOWN"}
-      </span>
-    </Typography>
+                      <Typography
+                        variant="h5"
+                        className="mb-2 font-bold text-center text-blue-gray-800 dark:text-white"
+                      >
+                        Brand:{" "}
+                        <span className="text-green-600 dark:text-blue-gray-300 font-medium">
+                          {prod.brand
+                            ? prod.brand
+                            : prod.tags
+                              ? prod.tags.map((im) => im).join(", ")
+                              : "UNKNOWN"}
+                        </span>
+                      </Typography>
 
-    <hr className="my-2 border-t border-gray-300 dark:border-blue-gray-700" />
+                      <hr className="my-2 border-t border-gray-300 dark:border-blue-gray-700" />
 
-    <Typography className="text-gray-700 dark:text-blue-gray-200 text-center text-lg font-semibold">
-      {prod.title}
-    </Typography>
+                      <Typography className="text-gray-700 dark:text-blue-gray-200 text-center text-lg font-semibold">
+                        {prod.title}
+                      </Typography>
 
-    <Typography className="text-black dark:text-white text-center font-bold mt-3">
-      Price:{" "}
-      <span className="text-green-600 dark:text-blue-gray-300 font-medium">
-        ${prod.price}
-      </span>
-    </Typography>
+                      <Typography className="text-black dark:text-white text-center font-bold mt-3">
+                        Price:{" "}
+                        <span className="text-green-600 dark:text-blue-gray-300 font-medium">
+                          ${prod.price}
+                        </span>
+                      </Typography>
 
-  </CardBody>
+                    </CardBody>
 
-  {/* FOOTER (same bg as card) */}
-  <CardFooter className="bg-transparent dark:bg-transparent pt-4 w-full">
+                    {/* FOOTER (same bg as card) */}
+                    <CardFooter className="bg-transparent dark:bg-transparent pt-4 w-full">
 
-    <Link to={`/details/${prod._id}`}>
-      <Button
-        className="w-full flex justify-center items-center font-bold text-sm rounded-lg px-4 py-2
-        bg-gradient-to-r from-green-700 to-yellow-700
-        hover:from-green-800 hover:to-yellow-800
-        dark:from-blue-gray-700 dark:to-blue-gray-800
-        dark:hover:from-blue-gray-800 dark:hover:to-blue-gray-900
-        text-white transition-all duration-300"
-      >
-        Show Details
-      </Button>
-    </Link>
+                      <Link to={`/details/${prod._id}`}>
+                        <Button
+                          className="w-full flex justify-center items-center font-bold text-sm rounded-lg px-4 py-2
+                           bg-gradient-to-r from-green-700 to-yellow-700
+                           hover:from-green-800 hover:to-yellow-800
+                          dark:from-blue-gray-700 dark:to-blue-gray-800
+                          dark:hover:from-blue-gray-800 dark:hover:to-blue-gray-900
+                          text-white transition-all duration-300"
+                        >
+                          Show Details
+                        </Button>
+                      </Link>
 
-  </CardFooter>
+                    </CardFooter>
 
-</Card>
+                  </Card>
                 </div>
               ))}
             </div>

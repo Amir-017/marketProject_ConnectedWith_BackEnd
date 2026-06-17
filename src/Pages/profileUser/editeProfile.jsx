@@ -10,7 +10,7 @@ function EditeProfile() {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const getuserDetails = () => {
@@ -21,6 +21,7 @@ function EditeProfile() {
         },
       })
       .then((data) => setUserDetail(data.data.data));
+    setLoading(true);
   };
 
   useEffect(() => {
@@ -68,13 +69,21 @@ function EditeProfile() {
       let newName = JSON.parse(localStorage.getItem("userName"));
       newName = res.data.data.name;
       localStorage.setItem("userName", JSON.stringify(newName));
-      
+
 
       await Swal.fire({
         icon: "success",
         title: "Success",
         text: res.data.message,
-        confirmButtonColor: "#16a34a"
+        confirmButtonColor:document.documentElement.classList.contains("dark")
+          ? "#0f1310"
+          : "#16a34a",
+         background: document.documentElement.classList.contains("dark")
+        ? "#20242b"
+        : "#ffffff",
+      color: document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#000000",
       });
 
       navigate("/");
@@ -85,6 +94,12 @@ function EditeProfile() {
         icon: "error",
         title: "Error",
         text: error.response?.data || "Something went wrong",
+        background: document.documentElement.classList.contains("dark")
+          ? "#20242b"
+          : "#ffffff",
+        color: document.documentElement.classList.contains("dark")
+          ? "#ffffff"
+          : "#000000",
       });
     }
   };
@@ -95,20 +110,21 @@ function EditeProfile() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-gray-100 dark:bg-blue-gray-900">
+
       <div className="w-full max-w-3xl bg-white dark:bg-blue-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-blue-gray-700">
         {/* Header */}
-        <div className="bg-gradient-to-r from-green-600 to-emerald-500 dark:bg-blue-gray-900 px-8 py-6 flex items-center gap-4">
-          <img
-            src="https://ui-avatars.com/api/?name=Amir&background=10b981&color=fff&rounded=true"
-            alt="Profile"
-            className="w-24 h-24 rounded-full object-cover ring-4 ring-white shadow-lg"
-          />
+        <div className="bg-gradient-to-r from-green-600 to-emerald-500 dark:from-blue-gray-900 dark:to-blue-gray-600 px-8 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <img
+              src={`https://ui-avatars.com/api/?name=${userDetail.name || "User"}&background=10b981&color=fff&rounded=true`}
+              alt="Profile"
+              className="w-24 h-24 rounded-full object-cover ring-4 ring-white shadow-lg"
+            />
 
-          <div className="text-white">
-            <h1 className="text-2xl font-bold">User Profile</h1>
-            <p className="opacity-90">
-              Manage and view your account information
-            </p>
+            <div className="text-white">
+              <h1 className="text-3xl font-bold">User Profile</h1>
+              <p className="text-white/80 mt-1">Manage and view your account information</p>
+            </div>
           </div>
         </div>
 
@@ -154,14 +170,14 @@ function EditeProfile() {
           <div className="pt-4 border-t border-gray-200 dark:border-blue-gray-700 flex justify-end gap-3">
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-lg dark:bg-blue-gray-900 bg-green-600 hover:bg-green-700 text-white font-semibold transition"
+              className="px-6 py-2.5 rounded-lg dark:bg-blue-gray-900 dark:hover:bg-blue-gray-700 bg-green-600 hover:bg-green-700 text-white font-semibold transition"
             >
               Update Profile
             </button>
 
             <button
               type="button"
-              className="px-6 py-2.5 rounded-lg dark:bg-blue-gray-900 bg-green-600 hover:bg-green-700 text-white font-semibold transition"
+              className="px-6 py-2.5 rounded-lg dark:bg-blue-gray-900 dark:hover:bg-blue-gray-700 bg-green-800 hover:bg-green-900 text-white font-semibold transition"
               onClick={pageChangePassword}
             >
               Change Password

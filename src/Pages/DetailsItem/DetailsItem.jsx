@@ -61,7 +61,13 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
           icon: "error",
           title: "Error",
           text: 'Sorry you are admin you can\'t  add product to cart',
-          confirmButtonColor: "#dc2626"
+          confirmButtonColor: "#dc2626",
+         background: document.documentElement.classList.contains("dark")
+        ? "#20242b"
+        : "#ffffff",
+      color: document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#000000",
         });
         return;
       }
@@ -70,7 +76,15 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
         icon: "success",
         title: "Success",
         text: 'Product added to cart successfully',
-        confirmButtonColor: "#16a34a"
+         confirmButtonColor:document.documentElement.classList.contains("dark")
+          ? "#0f1310"
+          : "#16a34a",
+         background: document.documentElement.classList.contains("dark")
+        ? "#20242b"
+        : "#ffffff",
+      color: document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#000000",
 
       });
       const res = await api.post(
@@ -92,12 +106,18 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
         icon: "error",
         title: "Error",
         text: 'Please login to add products to cart',
-        confirmButtonColor: "#dc2626"
+        confirmButtonColor: "#dc2626",
+         background: document.documentElement.classList.contains("dark")
+        ? "#20242b"
+        : "#ffffff",
+      color: document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#000000",
       });
       navigate("/login");
       return;
     }
-  };
+  }; 
   return (
     <div className="w-full min-h-[90vh] flex items-center justify-center bg-[#EAEAEA] dark:bg-blue-gray-900 py-10">
       {detailsProduct._id ? <div className="w-full max-w-6xl bg-white dark:bg-blue-gray-800 rounded-2xl shadow-xl overflow-hidden">
@@ -189,14 +209,14 @@ const DetailsItem = ({ aboutAdding, setAboutAdding }) => {
 
               <Button
                 onClick={() => addToCart()}
-                className="bg-green-700 hover:bg-green-800 dark:bg-blue-gray-700 dark:hover:bg-blue-gray-600 font-bold flex items-center gap-2"
+                className="bg-green-700 hover:bg-green-800 dark:bg-[#232a45] dark:hover:bg-[#232a45] font-bold flex items-center gap-2 transition hover:scale-105"
               >
                 Add to Cart <CiShoppingCart className="text-xl" />
               </Button>
 
               <button
                 onClick={() => navigate(`/reviews/${detailsProduct._id}`)}
-                className="bg-lime-700 hover:bg-lime-600 text-white px-5 py-2 rounded-md font-bold dark:bg-blue-gray-700 dark:hover:bg-blue-gray-600"
+                className="bg-lime-700 hover:bg-lime-600 text-white px-5 py-2 rounded-md font-bold dark:bg-[#232a45] transition hover:scale-105"
               >
                 All Reviews
               </button>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../Api/api";
 
 export default function Register() {
@@ -11,7 +11,6 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -63,7 +62,7 @@ export default function Register() {
       setLoading(false);
     }
   };
-
+   
   
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-blue-gray-900">

@@ -12,11 +12,13 @@ export default function Login() {
   const [error, setError] = useState('')
   const navigate = useNavigate();
   const location = useLocation();
- 
+
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
-  
+
+      // Example: redirect to home page after login
     if (!email || !password) {
 
       setError('You must fill all inputs')
@@ -48,8 +50,10 @@ export default function Login() {
 
       localStorage.setItem("accessToken", JSON.stringify(res.data.accesstoken))
       localStorage.setItem("userName", JSON.stringify(res.data.name));
-      // Example: redirect to home page after login
+     
+      
       navigate("/");
+       
     } catch (error) {
       console.error("Login error:", error);
 
@@ -68,7 +72,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-blue-gray-900">
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-blue-gray-900">
+      {location.state?.message && <div className="w-full px-5 flex justify-end mb-4">
+        <h1 className="text-gray-700 w-[300px] font-medium bg-white p-4 rounded-full flex items-center justify-center text-center text-sm dark:bg-slate-800 dark:text-gray-300 animate-bounce">
+          {location.state?.message}
+        </h1>
+
+      </div>}
+
+
       <div className="w-full max-w-sm bg-white dark:bg-blue-gray-800 shadow-md rounded-xl p-6">
         <h2 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-gray-100">
           Login

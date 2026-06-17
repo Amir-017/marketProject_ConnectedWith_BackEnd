@@ -54,17 +54,20 @@ const Head = ({
     document.documentElement.classList.add("dark");
     localStorage.theme = "dark";
     setDarkLight(!darkLight);
+    setOpenNav(false);
   }
   // light theme
   function setLightTheme() {
     document.documentElement.classList.remove("dark");
     localStorage.theme = "light";
     setDarkLight(!darkLight);
+    setOpenNav(false);
   }
   // search function
 
   const searchProd = () => {
     navigate("/search");
+    setOpenNav(false);
   };
 
   const getCart = () => {
@@ -82,20 +85,29 @@ const Head = ({
     }
   };
   // get cart when component mount (update cart quantity in header)
-  useEffect(() => {
+ useEffect(() => {
   const handleCartUpdate = () => {
     getCart();
   };
+
   window.addEventListener("cartUpdated", handleCartUpdate);
+
   return () => {
     window.removeEventListener("cartUpdated", handleCartUpdate);
   };
 }, []);
 
- // close nav when click on  any link or any interaction in header
+ // get cart when user log in (update cart quantity in header)
+useEffect(() => {
+  if (localStorage.getItem("accessToken")) {
+    getCart();
+  }
+}, []);
+  // close nav when click on  any link or any interaction in header
   useEffect(() => {
     setOpenNav(false);
   }, [location.pathname]);
+
   return (
 
     <Navbar
@@ -164,7 +176,7 @@ const Head = ({
                 ) : null,
               )}
             </ul>
-  
+
             {/* Cart */}
             <div className="relative group">
               <Badge

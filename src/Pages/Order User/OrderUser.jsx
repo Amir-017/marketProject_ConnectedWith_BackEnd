@@ -42,7 +42,6 @@ export const OrderUser = () => {
     const getCart = async () => {
         try {
             const token = JSON.parse(localStorage.getItem("accessToken"));
-            setLoadingCart(true);
             const res = await api.get("https://e-commerce-nodejs-blush.vercel.app/cart", {
                 headers: {
                     authorization: token,
@@ -51,8 +50,9 @@ export const OrderUser = () => {
             setCart(res.data.data || []);
         } catch (error) {
             console.log(error);
-        } 
-     
+        }
+        setLoadingCart(true);
+
     };
 
     useEffect(() => {
@@ -104,20 +104,20 @@ export const OrderUser = () => {
                     },
                 }
             );
-             // to make header know that cart is updated and update the counter in header
-             window.dispatchEvent(new Event("cartUpdated"));
+            // to make header know that cart is updated and update the counter in header
+            window.dispatchEvent(new Event("cartUpdated"));
         } catch (err) {
             console.log(err);
-        } 
-    
+        }
+
     };
 
     /* =========================
        UI
     ========================= */
     return (
-        <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-white px-6 py-10">
-            
+        <div className="min-h-screen bg-gradient-to-br from-zinc-950  via-zinc-900 to-black  dark:bg-[#0f172a] text-white px-6 py-10">
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
                 {/* ================= CART ================= */}
@@ -125,8 +125,10 @@ export const OrderUser = () => {
                     <h2 className="text-2xl font-bold mb-6">Your Cart</h2>
 
                     {!loadingCart ? (
-                        <div className="loader w-full flex justify-center items-center"></div>
-                    ) : cart.length === 0 ? (
+                        <div className=" w-full  flex justify-center items-center">
+                            <div className="loader"></div>
+                        </div>
+                    ) : !cart ? (
                         <div className="rounded-2xl border border-white/10 p-10 text-center text-gray-400">
                             Your cart is empty 🛒
                         </div>
@@ -138,8 +140,8 @@ export const OrderUser = () => {
                                         key={item.product._id}
                                         className="
                                     flex items-center gap-4 p-4 rounded-2xl
-                                     bg-gray-300 dark:bg-blue-gray-800 border border-gray-200 border-white/10  p-6
-                                    text-gray-900 dark:text-white
+                                     bg-gray-300  border border-gray-200 border-white/10  p-6
+                                    text-gray-900 dark:bg-[#232a45] dark:text-white
                                     shadow-sm hover:shadow-md
                                     hover:bg-gray-50 dark:hover:bg-zinc-800/60
                                     transition-all duration-300
@@ -214,7 +216,7 @@ export const OrderUser = () => {
                     </h2>
                     <span className="text-sm text-gray-600 dark:text-gray-400 mb-4 block">
                         Feel free to update your shipping information at any time.
-                        </span>
+                    </span>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 

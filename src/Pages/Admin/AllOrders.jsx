@@ -28,7 +28,7 @@ export function AllOrders() {
     }, []);
     console.log(orders);
     return (
-        <div className="min-h-screen px-4 py-10 bg-gray-100 dark:bg-blue-gray-900">
+        <div className="min-h-screen px-4 py-10 bg-gray-100 dark:bg-[#0f172a]">
            {loading ? <div className="w-full h-screen flex items-center justify-center">
             <div className="loader"></div>
            </div> : <div>   <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
@@ -40,7 +40,7 @@ export function AllOrders() {
                 {orders.map((order) => (
                     <div
                         key={order._id}
-                        className="rounded-2xl border border-gray-200 bg-white dark:bg-blue-gray-900 dark:border-blue-gray-600 p-5 shadow-sm hover:shadow-md transition"
+                        className="rounded-2xl border border-gray-200 bg-white dark:bg-[#0f172a] dark:border-blue-gray-600 p-5 shadow-sm hover:shadow-md transition"
                     >
 
                         {/* USER INFO */}
@@ -124,7 +124,7 @@ export function AllOrders() {
                     </div>
                 ))}
                 {/* total orders count and all revenue */}
-                <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-blue-gray-900">
+                <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#0f172a]">
 
                     <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                         📊 Orders Summary
