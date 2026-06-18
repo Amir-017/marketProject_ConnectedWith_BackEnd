@@ -70,17 +70,16 @@ const Head = ({
     setOpenNav(false);
   };
 
-  const getCart = () => {
+  const getCart = async () => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken"));
-      const res = api.get(`https://e-commerce-nodejs-blush.vercel.app/cart`, {
+      const res = await api.get(`https://e-commerce-nodejs-blush.vercel.app/cart`, {
         headers: {
           authorization: token
         }
-      }).then((res) => setCart(res.data.data));
-      // setCart(res.data.data);
+      });
+      setCart(res.data.data);
     } catch (error) {
-      console.log(error);
       return null;
     }
   };

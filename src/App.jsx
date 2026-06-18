@@ -72,6 +72,8 @@ import AddReview from "./Pages/ReviewsProducts/AddReview";
 import { ReviewsManagements } from "./Pages/Admin/ReviewsManagements";
 import { OrderUser } from "./Pages/Order User/OrderUser";
 import { AllOrders } from "./Pages/Admin/AllOrders";
+import { ResetPassword } from "./Pages/Change Password/resetPassword";
+import { ForgetPassword } from "./Pages/Change Password/ForgetPassword";
 const App = () => {
   // ==========================
   // 📌 State
@@ -256,7 +258,9 @@ const App = () => {
 
           {/* Search */}
           <Route path="/search" element={<SearchProducts checkSearch={checkSearch} Loading={loading} />} />
-
+          {/* Reset Password */}
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
         </Routes>
         {/* ==========================
         ========================== */}

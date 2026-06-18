@@ -20,7 +20,7 @@ export const AllReviews = () => {
     /// Get Reviews for specific product
     const getReviews = () => {
         const token = JSON.parse(localStorage.getItem("accessToken"));
-        api.get(`http://localhost:3000/reviewProducts/${id}`, {
+        api.get(`https://e-commerce-nodejs-blush.vercel.app/reviewProducts/${id}`, {
             headers: {
                 authorization: token
             }
@@ -53,7 +53,7 @@ export const AllReviews = () => {
 
         try {
             const token = JSON.parse(localStorage.getItem("accessToken"));
-            await api.delete(`http://localhost:3000/reviewProducts/${detailsProduct._id}/${reviewId}`, {
+            await api.delete(`https://e-commerce-nodejs-blush.vercel.app/reviewProducts/${detailsProduct._id}/${reviewId}`, {
                 headers: {
                     authorization: token
                 }
