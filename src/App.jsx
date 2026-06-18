@@ -72,7 +72,7 @@ import AddReview from "./Pages/ReviewsProducts/AddReview";
 import { ReviewsManagements } from "./Pages/Admin/ReviewsManagements";
 import { OrderUser } from "./Pages/Order User/OrderUser";
 import { AllOrders } from "./Pages/Admin/AllOrders";
-import { ResetPassword } from "./Pages/Change Password/resetPassword";
+import { ResetPassword } from "./Pages/Change Password/ResetPassword";
 import { ForgetPassword } from "./Pages/Change Password/ForgetPassword";
 const App = () => {
   // ==========================
