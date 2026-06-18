@@ -112,7 +112,7 @@ export default function Login() {
                placeholder="Your password"
             />
             <p className="text-red-800 dark:text-red-400 forErorr">{error}</p>
-            <p className="text-sm">Forgot your password? <a href="/forgetPassword" className="text-green-600 dark:text-gray-600 hover:underline text-sm">Click here</a></p>
+            <p className="text-sm dark:text-white text-gray-800">Forgot your password? <a onClick={() => navigate("/forgetPassword",{state: { email: email }})} className="text-green-600 dark:text-gray-500 hover:underline text-sm cursor-pointer">Click here</a></p>
           </div>
 
           <button

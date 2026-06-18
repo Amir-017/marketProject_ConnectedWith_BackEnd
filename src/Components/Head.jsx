@@ -80,6 +80,7 @@ const Head = ({
       });
       setCart(res.data.data);
     } catch (error) {
+      console.error("Error fetching cart:", error);
       return null;
     }
   };
