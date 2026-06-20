@@ -221,7 +221,7 @@ const SearchProducts = ({ checkSearch }) => {
 
             {search.totalPages > 1 && (
               <div className="w-full flex justify-center mt-10 mb-6">
-                <div className="flex items-center gap-6 px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-blue-gray-900 shadow-md backdrop-blur-sm">
+                <div className="flex items-center flex-col md:flex-row gap-6 px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white/70 dark:bg-blue-gray-900 shadow-md backdrop-blur-sm">
 
                   <Button
                     size="sm"
