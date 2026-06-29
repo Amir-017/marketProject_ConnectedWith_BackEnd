@@ -86,6 +86,9 @@ const Head = ({
   };
   // get cart when component mount (update cart quantity in header)
  useEffect(() => {
+  if(decoded?.role === "admin") {
+    return;
+  }
   const handleCartUpdate = () => {
     getCart();
   };
@@ -99,7 +102,7 @@ const Head = ({
 
  // get cart when user log in (update cart quantity in header)
 useEffect(() => {
-  if (localStorage.getItem("accessToken")) {
+  if (localStorage.getItem("accessToken") && decoded?.role !== "admin") {
     getCart();
   }
 }, []);
