@@ -111,7 +111,7 @@ export default function AdminDashboard() {
           <div className="loader"></div>
         </div> : <div>
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center flex-col md:flex-row mb-8">
             <div>
               <h1 className="text-4xl font-bold text-gray-800 dark:text-white">
                 Admin Dashboard
