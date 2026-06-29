@@ -110,6 +110,11 @@ const AllUsers = () => {
         </span>
       </div>
     </div>
+    {/* scroll hint text for mobile */}
+    <p className={` font-bold text-gray-900 dark:text-white text-center md:hidden block`}>
+      scroll horizontally to see all data 
+    </p>
+
     <div className="container mx-auto mt-8 px-4 mb-4  flex items-center justify-center">
       {loading ? <div className="w-full min-h-screen flex items-center justify-center">
         <h2 className="loader"></h2>

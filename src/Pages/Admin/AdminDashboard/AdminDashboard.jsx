@@ -198,7 +198,7 @@ export default function AdminDashboard() {
           )}
 
           {/* Pagination */}
-          <div className="flex justify-center items-center gap-5 mt-12">
+          <div className="flex justify-center items-center flex-col md:flex-row gap-5 mt-12">
             <button
               onClick={backwardPage}
               disabled={page === 1}

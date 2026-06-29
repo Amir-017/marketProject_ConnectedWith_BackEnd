@@ -82,7 +82,7 @@ function Profile() {
       ) : <div className="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden border border-gray-200 dark:border-slate-700">
 
         {/* Header */}
-        <div className="bg-gradient-to-r from-green-600 to-emerald-500 dark:from-blue-gray-900 dark:to-blue-gray-600 px-8 py-6 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-green-600 to-emerald-500 dark:from-blue-gray-900 dark:to-blue-gray-600 px-8 py-6 flex items-center justify-between flex-col md:flex-row gap-6">
           <div className="flex items-center gap-4">
             <img
               src={`https://ui-avatars.com/api/?name=${userDetail.name || "User"}&background=10b981&color=fff&rounded=true`}
