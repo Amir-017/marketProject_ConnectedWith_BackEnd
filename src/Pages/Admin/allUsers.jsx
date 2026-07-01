@@ -45,7 +45,7 @@ const AllUsers = () => {
       /////////////////////
       const token = JSON.parse(localStorage.getItem("accessToken"));
 
-      await api.delete(`https://e-commerce-nodejs-blush.vercel.app/users/${id}`, {
+      await api.delete(`https://e-commerce-nodejs-blush.vercel.app/deleteUser`, {
         headers: {
           authorization: token,
         },
