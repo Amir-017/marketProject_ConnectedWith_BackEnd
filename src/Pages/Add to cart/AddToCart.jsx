@@ -326,6 +326,7 @@ useEffect(() => {
                   <div className="inline-flex items-center border rounded-lg overflow-hidden">
 
                     <button
+                    disabled={item.quantity === 1}
                       onClick={() => decress(item)}
                       className="px-3 py-2 bg-gray-700 text-white"
                     >
@@ -337,6 +338,7 @@ useEffect(() => {
                     </span>
 
                     <button
+                    disabled={item.quantity === 10}
                       onClick={() => incress(item)}
                       className="px-3 py-2 bg-gray-700 text-white"
                     >
