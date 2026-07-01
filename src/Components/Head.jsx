@@ -92,7 +92,6 @@ const Head = ({
   const handleCartUpdate = () => {
     getCart();
   };
-
   window.addEventListener("cartUpdated", handleCartUpdate);
 
   return () => {

@@ -384,7 +384,7 @@ useEffect(() => {
             </p>
 
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-              {cart.length} Items
+              {cart.reduce((sum, item) => sum + item.quantity, 0)} Items
             </h2>
 
             <p className="text-green-600 dark:text-gray-300 font-bold mt-2">
