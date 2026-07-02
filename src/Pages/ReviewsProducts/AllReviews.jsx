@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../Api/api";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 // api.get(`https://e-commerce-nodejs-blush.vercel.app/reviews/${productId}`, {
 
 export const AllReviews = () => {
@@ -15,7 +16,9 @@ export const AllReviews = () => {
     );
     const { id } = useParams();
     const navigate = useNavigate();
-
+    const token = JSON.parse(localStorage.getItem("accessToken"));
+    const decoded = token ? jwtDecode(token) : null;
+  console.log(decoded);
     ///////////////////// Functions //////////////////////
     /// Get Reviews for specific product
     const getReviews = () => {
@@ -194,7 +197,7 @@ export const AllReviews = () => {
                                             disabled={deleteLoading}
                                             onClick={() => deleteReview(review._id)}
                                             className={`${deleteLoading ? 'bg-red-900' : 'bg-red-600 hover:bg-red-700'}
-                                            ${currentUser === review.userName?.name || currentUser === 'amir whdan' ? 'block' : 'hidden'}
+                                            ${decoded.email === review.userName?.email || decoded.role === 'admin' ? 'block' : 'hidden'}
                                             text-white px-4 py-2 rounded-lg transition`}
                                         >
                                             {deleteLoading ? 'Deleting...' : 'Delete'}

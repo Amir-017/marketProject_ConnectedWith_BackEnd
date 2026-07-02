@@ -54,7 +54,6 @@ export const ReviewsManagements = () => {
         }
     };
 
-    console.log(allReviews);
     return (
 
         <div className="min-h-screen bg-white dark:bg-[#0f172a] transition-colors duration-300">
