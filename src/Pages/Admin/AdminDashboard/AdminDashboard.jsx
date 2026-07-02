@@ -104,6 +104,37 @@ export default function AdminDashboard() {
 
   };
 
+  // go to first page
+  const firstPage = async () => {
+    if (page !== 1) {
+      setPage(1);
+      try {
+        const res = await api.get(
+          `https://e-commerce-nodejs-blush.vercel.app/products?dashboardAdmin=1&page=1`
+        );
+        setProducts(res.data.products || []);
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  const lastPage = async () => {
+    if (page !== totalPages) {
+      setPage(totalPages);
+      try {
+        const res = await api.get(
+          `https://e-commerce-nodejs-blush.vercel.app/products?dashboardAdmin=1&page=${totalPages}`
+        );
+        setProducts(res.data.products || []);
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-blue-gray-800 py-10 transition-colors duration-300">
       <div className="container mx-auto px-4">
@@ -200,6 +231,17 @@ export default function AdminDashboard() {
           {/* Pagination */}
           <div className="flex justify-center items-center flex-col md:flex-row gap-5 mt-12">
             <button
+              onClick={firstPage}
+              disabled={page === 1}
+              className={`px-5 py-2 rounded-lg font-semibold transition
+              ${page === 1
+                  ? "bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500"
+                  : "bg-black dark:bg-white dark:text-black text-white hover:scale-105"
+                }`}
+            >
+              start
+            </button>
+            <button
               onClick={backwardPage}
               disabled={page === 1}
               className={`px-5 py-2 rounded-lg font-semibold transition
@@ -208,7 +250,7 @@ export default function AdminDashboard() {
                   : "bg-black dark:bg-white dark:text-black text-white hover:scale-105"
                 }`}
             >
-              Backward
+              «
             </button>
 
             <div className="bg-white dark:bg-blue-gray-900 dark:text-white shadow px-6 py-2 rounded-xl font-bold">
@@ -224,7 +266,19 @@ export default function AdminDashboard() {
                   : "bg-black dark:bg-white dark:text-black text-white hover:scale-105"
                 }`}
             >
-              Forward
+              »
+            </button>
+
+            <button
+              onClick={lastPage}
+              disabled={page === totalPages}
+              className={`px-5 py-2 rounded-lg font-semibold transition
+              ${page === totalPages
+                  ? "bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500"
+                  : "bg-black dark:bg-white dark:text-black text-white hover:scale-105"
+                }`}
+            >
+              end
             </button>
           </div>
         </div>}
