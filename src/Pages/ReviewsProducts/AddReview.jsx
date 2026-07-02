@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import api from "../../Api/api";
+import { jwtDecode } from "jwt-decode";
 
 export default function AddReview() {
     //////////////////// States and Hooks ///////////////////////
@@ -30,7 +31,9 @@ export default function AddReview() {
     ////////////////////// Function that submit review and check if admin wants to add review cause it's not allowed for admin to add review ///////////////////////
     const submitReview = async (values) => {
         // check if admin wants to add review cause it's not allowed for admin to add review
-        if (currentUser && currentUser === "amir whdan") {
+            const token = JSON.parse(localStorage.getItem("accessToken"));
+            const decoded = token ? jwtDecode(token) : null;
+        if (decoded && decoded.role === 'admin') {
             const result = Swal.fire({
                 icon: "error",
                 title: "Access Denied",
@@ -50,7 +53,6 @@ export default function AddReview() {
 
         }
         //
-        const token = JSON.parse(localStorage.getItem("accessToken"));
         try {
             await api.post(
                 `https://e-commerce-nodejs-blush.vercel.app/reviewProducts/${id}`,
